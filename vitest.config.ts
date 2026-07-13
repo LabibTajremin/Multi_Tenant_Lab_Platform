@@ -10,6 +10,13 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],
       include: ['src/domain/**', 'src/application/**'],
+      // Pure type-only files (entities, repository interfaces, the shared
+      // use-case context type) compile to no runtime statements at all — they
+      // have nothing to cover and Section 16's build order explicitly treats
+      // them as "no logic yet, just types". Excluding them keeps the
+      // threshold measuring actual tested logic instead of being diluted by
+      // files that can never be exercised.
+      exclude: ['src/domain/entities/**', 'src/domain/repositories/**', 'src/application/context.ts'],
       thresholds: {
         lines: 85,
         branches: 85,
