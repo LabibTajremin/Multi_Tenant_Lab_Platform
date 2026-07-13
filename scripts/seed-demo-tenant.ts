@@ -2,9 +2,19 @@
 /* eslint-disable no-console */
 // Provisions a fully-usable demo tenant: tenant + Admin + completed setup
 // (site_settings) + a few pieces of demo content, so a fresh checkout (or CI's
-// e2e job) has something real to point the app and Playwright at. Prints
-// TENANT_ID=<uuid> as its last stdout line so callers (see .github/workflows/ci.yml)
-// can capture it into $GITHUB_ENV / a local .env file.
+// e2e job) has something real to point the app and Playwright at. Also
+// provisions a second, isolated "distractor" tenant with a distinctive
+// content marker, purely so the E2E cross-tenant-isolation test (Section
+// 15.4) has something in the shared database that must NEVER render through
+// the first tenant's deployment.
+//
+// Prints TENANT_ID=<uuid> as its last stdout line so callers (see
+// .github/workflows/ci.yml) can capture the primary tenant's id into
+// $GITHUB_ENV / a local .env file. Also writes .e2e-seed.json (gitignored)
+// with structured credentials/markers for the Playwright suite to read.
+import { writeFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import bcrypt from 'bcryptjs';
 import { config } from 'dotenv';
 import { provisionTenant } from '../src/application/use-cases/tenants/ProvisionTenant';
 import { PostgresTenantRepository } from '../src/infrastructure/repositories/PostgresTenantRepository';
@@ -18,13 +28,19 @@ import { closePool } from '../src/infrastructure/db/client';
 
 config();
 
+// Fixed for e2e convenience — the seed script sets this directly (bypassing
+// the forced-reset UI flow) so most tests can log straight in. Real accounts
+// created through the app (provision-tenant.ts, /admin/users) always keep the
+// forced-reset behavior; only this scripted seed short-circuits it.
+const KNOWN_ADMIN_PASSWORD = 'e2e-admin-password-123';
+
 async function main(): Promise<void> {
   const unique = `demo-${Date.now()}`;
   const tenantRepo = new PostgresTenantRepository();
   const userRepo = new PostgresUserRepository();
   const siteSettingsRepo = new PostgresSiteSettingsRepository();
 
-  const { tenant, admin, temporaryPassword } = await provisionTenant(
+  const { tenant, admin } = await provisionTenant(
     {
       labName: 'Demo Polymer Lab',
       slug: unique,
@@ -35,6 +51,9 @@ async function main(): Promise<void> {
     },
     { tenantRepo, userRepo, siteSettingsRepo },
   );
+
+  const knownPasswordHash = await bcrypt.hash(KNOWN_ADMIN_PASSWORD, 12);
+  await userRepo.setPasswordHash(tenant.id, admin.id, knownPasswordHash, false);
 
   // Completes the /setup wizard programmatically (writes the site_settings row
   // that flips isTenantProvisioned() to true).
@@ -79,8 +98,48 @@ async function main(): Promise<void> {
     createdBy: admin.id,
   });
 
+  // A second, wholly separate tenant — never the one this deployment's
+  // TENANT_ID points at — so the E2E suite can assert its content is never
+  // reachable through the primary tenant's UI (Section 15.4 cross-tenant check).
+  const distractorUnique = `distractor-${Date.now()}`;
+  const distractorMarker = `CROSS-TENANT-LEAK-CHECK-${Date.now()}`;
+  const { tenant: otherTenant, admin: otherAdmin } = await provisionTenant(
+    {
+      labName: 'Other Lab (should never be visible)',
+      slug: distractorUnique,
+      adminEmail: `pi@${distractorUnique}.edu`,
+      adminDisplayName: 'Dr. Other',
+    },
+    { tenantRepo, userRepo, siteSettingsRepo },
+  );
+  await siteSettingsRepo.upsert(otherTenant.id, { tagline: distractorMarker });
+  await publications.create({
+    tenantId: otherTenant.id,
+    title: distractorMarker,
+    authors: 'Someone Else',
+    year: new Date().getFullYear(),
+    status: 'published',
+    createdBy: otherAdmin.id,
+  });
+
   console.log(`Tenant:   ${tenant.labName} (${tenant.slug})`);
-  console.log(`Admin:    ${admin.email} / ${temporaryPassword}`);
+  console.log(`Admin:    ${admin.email} / ${KNOWN_ADMIN_PASSWORD}`);
+  console.log(`Distractor tenant marker: ${distractorMarker}`);
+
+  writeFileSync(
+    resolve(process.cwd(), '.e2e-seed.json'),
+    JSON.stringify(
+      {
+        tenantId: tenant.id,
+        adminEmail: admin.email,
+        adminPassword: KNOWN_ADMIN_PASSWORD,
+        distractorMarker,
+      },
+      null,
+      2,
+    ),
+  );
+
   console.log(`TENANT_ID=${tenant.id}`);
 }
 
