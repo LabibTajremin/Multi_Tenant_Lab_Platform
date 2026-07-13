@@ -1,0 +1,153 @@
+'use client';
+
+import { useFormState, useFormStatus } from 'react-dom';
+import type { Tenant } from '@/domain/entities/Tenant';
+import type { SiteSettings } from '@/domain/entities/SiteSettings';
+import { ACCENT_COLORS } from '@/lib/theme';
+import { LINK_PLATFORMS } from '@/domain/value-objects/LinkPlatform';
+import { initialFormState, type FormState } from '@/lib/formState';
+import FileUploadField from '@/components/admin/FileUploadField';
+import { updateSettingsAction } from './actions';
+
+const PLATFORM_LABELS: Record<string, string> = {
+  website: 'Website',
+  linkedin: 'LinkedIn',
+  google_scholar: 'Google Scholar',
+  twitter: 'Twitter / X',
+  github: 'GitHub',
+};
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="rounded-md bg-slate-900 px-4 py-2.5 font-medium text-white transition hover:bg-slate-800 disabled:opacity-60"
+    >
+      {pending ? 'Saving…' : 'Save settings'}
+    </button>
+  );
+}
+
+export default function SettingsForm({ tenant, settings }: { tenant: Tenant; settings: SiteSettings | null }) {
+  const [state, formAction] = useFormState<FormState, FormData>(updateSettingsAction, initialFormState);
+  const linkFor = (platform: string) => settings?.socialLinks.find((l) => l.platform === platform)?.url ?? '';
+
+  return (
+    <form action={formAction} className="max-w-2xl space-y-6">
+      <div>
+        <label htmlFor="labName" className="block text-sm font-medium text-slate-700">
+          Lab name <span className="text-red-600">*</span>
+        </label>
+        <input
+          id="labName"
+          name="labName"
+          required
+          defaultValue={tenant.labName}
+          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="university" className="block text-sm font-medium text-slate-700">
+          University
+        </label>
+        <input
+          id="university"
+          name="university"
+          defaultValue={tenant.university ?? ''}
+          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="tagline" className="block text-sm font-medium text-slate-700">
+          Tagline
+        </label>
+        <input
+          id="tagline"
+          name="tagline"
+          defaultValue={settings?.tagline ?? ''}
+          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="contactEmail" className="block text-sm font-medium text-slate-700">
+          Public contact email
+        </label>
+        <input
+          id="contactEmail"
+          name="contactEmail"
+          type="email"
+          defaultValue={settings?.contactEmail ?? ''}
+          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+        />
+      </div>
+
+      <FileUploadField
+        name="logoUrl"
+        category="logo"
+        accept="image/jpeg,image/png,image/webp"
+        label="Logo"
+        defaultValue={tenant.logoUrl ?? ''}
+      />
+
+      <FileUploadField
+        name="bannerUrl"
+        category="banner"
+        accept="image/jpeg,image/png,image/webp"
+        label="Banner image"
+        defaultValue={settings?.bannerUrl ?? ''}
+      />
+
+      <fieldset>
+        <legend className="block text-sm font-medium text-slate-700">Accent color</legend>
+        <div className="mt-2 flex flex-wrap gap-3">
+          {ACCENT_COLORS.map((color) => (
+            <label key={color.value} className="flex cursor-pointer items-center gap-2 rounded-md border border-slate-200 px-3 py-2 text-sm">
+              <input
+                type="radio"
+                name="primaryColor"
+                value={color.value}
+                defaultChecked={tenant.primaryColor === color.value}
+                className="sr-only"
+              />
+              <span className="h-4 w-4 rounded-full border border-black/10" style={{ backgroundColor: color.swatch }} aria-hidden />
+              {color.label}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend className="block text-sm font-medium text-slate-700">Social links</legend>
+        <div className="mt-2 space-y-2">
+          {LINK_PLATFORMS.map((platform) => (
+            <div key={platform}>
+              <label htmlFor={`link_${platform}`} className="block text-xs font-medium text-slate-500">
+                {PLATFORM_LABELS[platform]}
+              </label>
+              <input
+                id={`link_${platform}`}
+                name={`link_${platform}`}
+                type="url"
+                defaultValue={linkFor(platform)}
+                className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+              />
+            </div>
+          ))}
+        </div>
+      </fieldset>
+
+      {state.error && (
+        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+          {state.error}
+        </p>
+      )}
+
+      <SubmitButton />
+    </form>
+  );
+}

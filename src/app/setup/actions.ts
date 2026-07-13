@@ -1,0 +1,42 @@
+'use server';
+
+import { redirect } from 'next/navigation';
+import { PostgresTenantRepository } from '@/infrastructure/repositories/PostgresTenantRepository';
+import { PostgresSiteSettingsRepository } from '@/infrastructure/repositories/PostgresSiteSettingsRepository';
+import { getTenantId } from '@/lib/tenantContext';
+import { getSessionUser } from '@/lib/session';
+
+export async function completeSetup(formData: FormData): Promise<void> {
+  // Gated behind an authenticated Admin session (the one provision-tenant.ts
+  // created) so an unauthenticated visitor can't claim/reconfigure the tenant
+  // before its real Admin has logged in.
+  const user = await getSessionUser();
+  if (!user || user.role !== 'admin') {
+    redirect('/login');
+  }
+
+  const tenantId = getTenantId();
+  const labName = String(formData.get('labName') ?? '').trim();
+  const theme = String(formData.get('theme') ?? 'default');
+  const primaryColor = String(formData.get('primaryColor') ?? '');
+  const tagline = String(formData.get('tagline') ?? '').trim();
+  const contactEmail = String(formData.get('contactEmail') ?? '').trim();
+  const logoUrl = String(formData.get('logoUrl') ?? '').trim();
+
+  if (!labName) {
+    throw new Error('Lab name is required.');
+  }
+
+  const tenantRepo = new PostgresTenantRepository();
+  const siteSettingsRepo = new PostgresSiteSettingsRepository();
+
+  await tenantRepo.update(tenantId, { labName, theme, primaryColor: primaryColor || null, logoUrl: logoUrl || null });
+  // Writing this row is what flips isTenantProvisioned() to true (Section 5) and
+  // ends the /setup redirect loop.
+  await siteSettingsRepo.upsert(tenantId, {
+    tagline: tagline || null,
+    contactEmail: contactEmail || null,
+  });
+
+  redirect('/');
+}

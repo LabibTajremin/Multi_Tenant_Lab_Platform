@@ -1,0 +1,70 @@
+import Link from 'next/link';
+import { PostgresNewsRepository } from '@/infrastructure/repositories/PostgresNewsRepository';
+import { getTenantId } from '@/lib/tenantContext';
+import { getSessionUser } from '@/lib/session';
+import { canDeleteContent, canEditContent } from '@/lib/rbac';
+import StatusBadge from '@/components/admin/StatusBadge';
+import { deleteNewsItemAction } from './actions';
+
+export const dynamic = 'force-dynamic';
+
+export default async function NewsListPage() {
+  const tenantId = getTenantId();
+  const [user, items] = await Promise.all([getSessionUser(), new PostgresNewsRepository().listAll(tenantId)]);
+
+  return (
+    <div>
+      <div className="flex items-center justify-between">
+        <h1 className="font-display text-2xl font-semibold text-slate-900">News</h1>
+        <Link href="/admin/news/new" className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800">
+          + Add news item
+        </Link>
+      </div>
+
+      <div className="mt-6 overflow-x-auto rounded-lg border border-slate-200 bg-white">
+        <table className="min-w-full divide-y divide-slate-200 text-sm">
+          <thead className="bg-slate-50 text-left text-xs font-medium uppercase tracking-wide text-slate-500">
+            <tr>
+              <th className="px-4 py-3">Title</th>
+              <th className="px-4 py-3">Date</th>
+              <th className="px-4 py-3">Status</th>
+              <th className="px-4 py-3" />
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {items.map((item) => (
+              <tr key={item.id}>
+                <td className="px-4 py-3 font-medium text-slate-900">{item.title}</td>
+                <td className="px-4 py-3 text-slate-700">{new Date(item.publishedDate).toLocaleDateString()}</td>
+                <td className="px-4 py-3">
+                  <StatusBadge status={item.status} />
+                </td>
+                <td className="px-4 py-3 text-right space-x-3">
+                  {canEditContent(user, item) && (
+                    <Link href={`/admin/news/${item.id}/edit`} className="text-slate-700 hover:underline">
+                      Edit
+                    </Link>
+                  )}
+                  {canDeleteContent(user, item) && (
+                    <form action={deleteNewsItemAction.bind(null, item.id)} className="inline">
+                      <button type="submit" className="text-red-600 hover:underline">
+                        Delete
+                      </button>
+                    </form>
+                  )}
+                </td>
+              </tr>
+            ))}
+            {items.length === 0 && (
+              <tr>
+                <td colSpan={4} className="px-4 py-8 text-center text-slate-500">
+                  No news items yet.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
