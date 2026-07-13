@@ -1,0 +1,63 @@
+{
+  "name": "multi-tenant-lab-platform",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "migrate": "node-pg-migrate -m src/infrastructure/db/migrations",
+    "migrate:up": "node-pg-migrate up -m src/infrastructure/db/migrations",
+    "migrate:down": "node-pg-migrate down -m src/infrastructure/db/migrations",
+    "provision-tenant": "tsx scripts/provision-tenant.ts",
+    "seed-demo-tenant": "tsx scripts/seed-demo-tenant.ts",
+    "export-tenant": "tsx scripts/export-tenant.ts",
+    "test:unit": "vitest run src/domain src/application src/lib",
+    "test:unit:watch": "vitest src/domain src/application src/lib",
+    "test:integration": "vitest run --config vitest.integration.config.ts",
+    "test:e2e": "playwright test",
+    "test:all": "npm run test:unit && npm run test:integration && npm run test:e2e",
+    "test:coverage": "vitest run src/domain src/application src/lib --coverage"
+  },
+  "dependencies": {
+    "next": "^14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "next-auth": "^4.24.7",
+    "pg": "^8.12.0",
+    "zod": "^3.23.8",
+    "bcryptjs": "^2.4.3",
+    "@aws-sdk/client-s3": "^3.606.0",
+    "@aws-sdk/s3-request-presigner": "^3.606.0",
+    "clsx": "^2.1.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.45.3",
+    "@testing-library/react": "^16.0.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^20.14.11",
+    "@types/pg": "^8.11.6",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^7.16.1",
+    "@typescript-eslint/parser": "^7.16.1",
+    "@vitejs/plugin-react": "^4.3.1",
+    "@vitest/coverage-v8": "^2.0.4",
+    "autoprefixer": "^10.4.19",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.5",
+    "node-pg-migrate": "^7.6.1",
+    "postcss": "^8.4.40",
+    "tailwindcss": "^3.4.6",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3",
+    "vitest": "^2.0.4",
+    "vitest-mock-extended": "^2.0.0"
+  }
+}
