@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { getCurrentTenant } from '@/lib/tenantContext';
 import { getSessionUser } from '@/lib/session';
 import { ACCENT_COLORS } from '@/lib/theme';
+import FileUploadField from '@/components/admin/FileUploadField';
 import { completeSetup } from './actions';
 
 // Reads live per-deployment DB state — never statically prerendered (see the
@@ -66,6 +67,8 @@ export default async function SetupPage() {
             className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-accent-ocean-500 focus:outline-none focus:ring-1 focus:ring-accent-ocean-500"
           />
         </div>
+
+        <FileUploadField name="logoUrl" category="logo" accept="image/jpeg,image/png,image/webp" label="Logo" defaultValue={tenant.logoUrl ?? ''} />
 
         <fieldset>
           <legend className="block text-sm font-medium text-slate-700">Accent color</legend>

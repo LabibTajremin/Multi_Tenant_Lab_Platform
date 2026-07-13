@@ -3,6 +3,7 @@
 import { useFormState, useFormStatus } from 'react-dom';
 import type { NewsItem } from '@/domain/entities/NewsItem';
 import { initialFormState, type FormState } from '@/lib/formState';
+import FileUploadField from '@/components/admin/FileUploadField';
 
 function SubmitButton({ label }: { label: string }) {
   const { pending } = useFormStatus();
@@ -76,19 +77,13 @@ export default function NewsForm({
         />
       </div>
 
-      <div>
-        <label htmlFor="imageUrl" className="block text-sm font-medium text-slate-700">
-          Image URL
-        </label>
-        <input
-          id="imageUrl"
-          name="imageUrl"
-          type="url"
-          defaultValue={newsItem?.imageUrl ?? ''}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
-        />
-        <p className="mt-1 text-xs text-slate-500">Upload support is coming soon — paste a link for now.</p>
-      </div>
+      <FileUploadField
+        name="imageUrl"
+        category="image"
+        accept="image/jpeg,image/png,image/webp"
+        label="Image"
+        defaultValue={newsItem?.imageUrl ?? ''}
+      />
 
       <div>
         <label htmlFor="imageAlt" className="block text-sm font-medium text-slate-700">

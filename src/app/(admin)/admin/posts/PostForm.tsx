@@ -4,6 +4,7 @@ import { useFormState, useFormStatus } from 'react-dom';
 import type { Post } from '@/domain/entities/Post';
 import { POST_TYPES } from '@/domain/value-objects/PostType';
 import { initialFormState, type FormState } from '@/lib/formState';
+import FileUploadField from '@/components/admin/FileUploadField';
 
 const POST_TYPE_LABELS: Record<string, string> = { funding: 'Funding', gallery: 'Gallery', research: 'Research' };
 
@@ -79,19 +80,13 @@ export default function PostForm({
         />
       </div>
 
-      <div>
-        <label htmlFor="imageUrl" className="block text-sm font-medium text-slate-700">
-          Image URL
-        </label>
-        <input
-          id="imageUrl"
-          name="imageUrl"
-          type="url"
-          defaultValue={post?.imageUrl ?? ''}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
-        />
-        <p className="mt-1 text-xs text-slate-500">Upload support is coming soon — paste a link for now.</p>
-      </div>
+      <FileUploadField
+        name="imageUrl"
+        category="image"
+        accept="image/jpeg,image/png,image/webp"
+        label="Image"
+        defaultValue={post?.imageUrl ?? ''}
+      />
 
       <div>
         <label htmlFor="imageAlt" className="block text-sm font-medium text-slate-700">

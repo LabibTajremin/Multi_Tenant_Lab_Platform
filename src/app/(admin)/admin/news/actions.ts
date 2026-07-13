@@ -8,6 +8,7 @@ import { updateNewsItem } from '@/application/use-cases/news/UpdateNewsItem';
 import { deleteNewsItem } from '@/application/use-cases/news/DeleteNewsItem';
 import { getUseCaseContext } from '@/lib/useCaseContext';
 import { toFormState, type FormState } from '@/lib/formState';
+import { deleteStoredFile } from '@/lib/deleteStorageObject';
 
 function parseInput(formData: FormData) {
   const publishedDate = String(formData.get('publishedDate') ?? '');
@@ -48,6 +49,8 @@ export async function updateNewsItemAction(id: string, _prevState: FormState, fo
 export async function deleteNewsItemAction(id: string): Promise<void> {
   const repo = new PostgresNewsRepository();
   const ctx = await getUseCaseContext();
+  const existing = await repo.findById(ctx.tenantId, id);
   await deleteNewsItem(id, ctx, { repo });
+  await deleteStoredFile(existing?.imageUrl);
   revalidatePath('/admin/news');
 }

@@ -8,6 +8,7 @@ import { updatePublication } from '@/application/use-cases/publications/UpdatePu
 import { deletePublication } from '@/application/use-cases/publications/DeletePublication';
 import { getUseCaseContext } from '@/lib/useCaseContext';
 import { toFormState, type FormState } from '@/lib/formState';
+import { deleteStoredFile } from '@/lib/deleteStorageObject';
 
 function parseInput(formData: FormData) {
   const year = Number(formData.get('year'));
@@ -52,6 +53,8 @@ export async function updatePublicationAction(
 export async function deletePublicationAction(id: string): Promise<void> {
   const repo = new PostgresPublicationRepository();
   const ctx = await getUseCaseContext();
+  const existing = await repo.findById(ctx.tenantId, id);
   await deletePublication(id, ctx, { repo });
+  await deleteStoredFile(existing?.pdfUrl);
   revalidatePath('/admin/publications');
 }

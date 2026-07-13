@@ -8,6 +8,7 @@ import { updateMemberProfile } from '@/application/use-cases/members/UpdateMembe
 import { deleteMemberProfile } from '@/application/use-cases/members/DeleteMemberProfile';
 import { getUseCaseContext } from '@/lib/useCaseContext';
 import { toFormState, type FormState } from '@/lib/formState';
+import { deleteStoredFile } from '@/lib/deleteStorageObject';
 import type { LinkPlatform } from '@/domain/value-objects/LinkPlatform';
 import { LINK_PLATFORMS } from '@/domain/value-objects/LinkPlatform';
 
@@ -62,6 +63,8 @@ export async function updateMemberProfileAction(
 export async function deleteMemberProfileAction(id: string): Promise<void> {
   const repo = new PostgresMemberRepository();
   const ctx = await getUseCaseContext();
+  const existing = await repo.findById(ctx.tenantId, id);
   await deleteMemberProfile(id, ctx, { repo });
+  await deleteStoredFile(existing?.photoUrl);
   revalidatePath('/admin/members');
 }

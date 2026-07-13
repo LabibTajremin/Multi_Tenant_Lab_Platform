@@ -3,6 +3,7 @@
 import { useFormState, useFormStatus } from 'react-dom';
 import type { Publication } from '@/domain/entities/Publication';
 import { initialFormState, type FormState } from '@/lib/formState';
+import FileUploadField from '@/components/admin/FileUploadField';
 
 function SubmitButton({ label }: { label: string }) {
   const { pending } = useFormStatus();
@@ -98,19 +99,13 @@ export default function PublicationForm({
         />
       </div>
 
-      <div>
-        <label htmlFor="pdfUrl" className="block text-sm font-medium text-slate-700">
-          PDF URL
-        </label>
-        <input
-          id="pdfUrl"
-          name="pdfUrl"
-          type="url"
-          defaultValue={publication?.pdfUrl ?? ''}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
-        />
-        <p className="mt-1 text-xs text-slate-500">Upload support is coming soon — paste a link for now.</p>
-      </div>
+      <FileUploadField
+        name="pdfUrl"
+        category="pdf"
+        accept="application/pdf"
+        label="PDF"
+        defaultValue={publication?.pdfUrl ?? ''}
+      />
 
       {state.error && (
         <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">

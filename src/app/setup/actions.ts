@@ -21,6 +21,7 @@ export async function completeSetup(formData: FormData): Promise<void> {
   const primaryColor = String(formData.get('primaryColor') ?? '');
   const tagline = String(formData.get('tagline') ?? '').trim();
   const contactEmail = String(formData.get('contactEmail') ?? '').trim();
+  const logoUrl = String(formData.get('logoUrl') ?? '').trim();
 
   if (!labName) {
     throw new Error('Lab name is required.');
@@ -29,7 +30,7 @@ export async function completeSetup(formData: FormData): Promise<void> {
   const tenantRepo = new PostgresTenantRepository();
   const siteSettingsRepo = new PostgresSiteSettingsRepository();
 
-  await tenantRepo.update(tenantId, { labName, theme, primaryColor: primaryColor || null });
+  await tenantRepo.update(tenantId, { labName, theme, primaryColor: primaryColor || null, logoUrl: logoUrl || null });
   // Writing this row is what flips isTenantProvisioned() to true (Section 5) and
   // ends the /setup redirect loop.
   await siteSettingsRepo.upsert(tenantId, {

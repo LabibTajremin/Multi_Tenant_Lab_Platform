@@ -6,6 +6,7 @@ import type { SiteSettings } from '@/domain/entities/SiteSettings';
 import { ACCENT_COLORS } from '@/lib/theme';
 import { LINK_PLATFORMS } from '@/domain/value-objects/LinkPlatform';
 import { initialFormState, type FormState } from '@/lib/formState';
+import FileUploadField from '@/components/admin/FileUploadField';
 import { updateSettingsAction } from './actions';
 
 const PLATFORM_LABELS: Record<string, string> = {
@@ -85,32 +86,21 @@ export default function SettingsForm({ tenant, settings }: { tenant: Tenant; set
         />
       </div>
 
-      <div>
-        <label htmlFor="logoUrl" className="block text-sm font-medium text-slate-700">
-          Logo URL
-        </label>
-        <input
-          id="logoUrl"
-          name="logoUrl"
-          type="url"
-          defaultValue={tenant.logoUrl ?? ''}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
-        />
-      </div>
+      <FileUploadField
+        name="logoUrl"
+        category="logo"
+        accept="image/jpeg,image/png,image/webp"
+        label="Logo"
+        defaultValue={tenant.logoUrl ?? ''}
+      />
 
-      <div>
-        <label htmlFor="bannerUrl" className="block text-sm font-medium text-slate-700">
-          Banner image URL
-        </label>
-        <input
-          id="bannerUrl"
-          name="bannerUrl"
-          type="url"
-          defaultValue={settings?.bannerUrl ?? ''}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
-        />
-        <p className="mt-1 text-xs text-slate-500">Upload support is coming soon — paste a link for now.</p>
-      </div>
+      <FileUploadField
+        name="bannerUrl"
+        category="banner"
+        accept="image/jpeg,image/png,image/webp"
+        label="Banner image"
+        defaultValue={settings?.bannerUrl ?? ''}
+      />
 
       <fieldset>
         <legend className="block text-sm font-medium text-slate-700">Accent color</legend>

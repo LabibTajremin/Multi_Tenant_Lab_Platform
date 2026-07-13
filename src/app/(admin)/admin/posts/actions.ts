@@ -8,6 +8,7 @@ import { updatePost } from '@/application/use-cases/posts/UpdatePost';
 import { deletePost } from '@/application/use-cases/posts/DeletePost';
 import { getUseCaseContext } from '@/lib/useCaseContext';
 import { toFormState, type FormState } from '@/lib/formState';
+import { deleteStoredFile } from '@/lib/deleteStorageObject';
 
 function parseCreateInput(formData: FormData) {
   return {
@@ -55,6 +56,8 @@ export async function updatePostAction(id: string, _prevState: FormState, formDa
 export async function deletePostAction(id: string): Promise<void> {
   const repo = new PostgresPostRepository();
   const ctx = await getUseCaseContext();
+  const existing = await repo.findById(ctx.tenantId, id);
   await deletePost(id, ctx, { repo });
+  await deleteStoredFile(existing?.imageUrl);
   revalidatePath('/admin/posts');
 }

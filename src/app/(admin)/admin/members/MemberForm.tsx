@@ -5,6 +5,7 @@ import type { Member } from '@/domain/entities/Member';
 import { MEMBER_POSITIONS } from '@/domain/value-objects/MemberPosition';
 import { LINK_PLATFORMS } from '@/domain/value-objects/LinkPlatform';
 import { initialFormState, type FormState } from '@/lib/formState';
+import FileUploadField from '@/components/admin/FileUploadField';
 
 function SubmitButton({ label }: { label: string }) {
   const { pending } = useFormStatus();
@@ -113,19 +114,13 @@ export default function MemberForm({
         />
       </div>
 
-      <div>
-        <label htmlFor="photoUrl" className="block text-sm font-medium text-slate-700">
-          Photo URL
-        </label>
-        <input
-          id="photoUrl"
-          name="photoUrl"
-          type="url"
-          defaultValue={member?.photoUrl ?? ''}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
-        />
-        <p className="mt-1 text-xs text-slate-500">Upload support is coming soon — paste a link for now.</p>
-      </div>
+      <FileUploadField
+        name="photoUrl"
+        category="photo"
+        accept="image/jpeg,image/png,image/webp"
+        label="Photo"
+        defaultValue={member?.photoUrl ?? ''}
+      />
 
       <div>
         <label htmlFor="photoAlt" className="block text-sm font-medium text-slate-700">
