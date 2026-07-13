@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { PostgresPublicationRepository } from '@/infrastructure/repositories/PostgresPublicationRepository';
 import { PostgresNewsRepository } from '@/infrastructure/repositories/PostgresNewsRepository';
@@ -39,6 +40,11 @@ export default async function ReviewQueuePage() {
   ].sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
 
   const KIND_LABEL: Record<ContentKind, string> = { publication: 'Publication', news: 'News', post: 'Post' };
+  const EDIT_HREF: Record<ContentKind, (id: string) => string> = {
+    publication: (id) => `/admin/publications/${id}/edit`,
+    news: (id) => `/admin/news/${id}/edit`,
+    post: (id) => `/admin/posts/${id}/edit`,
+  };
 
   return (
     <div>
@@ -57,11 +63,16 @@ export default async function ReviewQueuePage() {
                 </span>
                 <p className="mt-1 font-medium text-slate-900">{row.title}</p>
               </div>
-              <form action={approveItemAction.bind(null, row.kind, row.id)}>
-                <button type="submit" className="rounded-md bg-green-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-green-700">
-                  Approve
-                </button>
-              </form>
+              <div className="flex items-center gap-3">
+                <Link href={EDIT_HREF[row.kind](row.id)} className="text-sm text-slate-700 hover:underline">
+                  Edit
+                </Link>
+                <form action={approveItemAction.bind(null, row.kind, row.id)}>
+                  <button type="submit" className="rounded-md bg-green-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-green-700">
+                    Approve
+                  </button>
+                </form>
+              </div>
             </div>
             <details className="mt-3">
               <summary className="cursor-pointer text-sm text-red-600">Reject with a note…</summary>

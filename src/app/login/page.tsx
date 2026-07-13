@@ -2,10 +2,8 @@
 
 import { useState } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -23,8 +21,11 @@ export default function LoginPage() {
       setError('Incorrect email or password.');
       return;
     }
-    router.push('/admin/dashboard');
-    router.refresh();
+    // A hard navigation (not router.push) so the destination is a fresh
+    // server render reading the just-issued session cookie — a client-side
+    // push here can serve a stale cached RSC payload for /admin/dashboard
+    // and skip the mustResetPassword redirect on the very first navigation.
+    window.location.href = '/admin/dashboard';
   }
 
   return (
