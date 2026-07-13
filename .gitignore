@@ -12,6 +12,7 @@ next-env.d.ts
 .env.test
 .env.*.local
 .e2e-seed.json
+/exports/
 
 playwright-report/
 test-results/
