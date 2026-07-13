@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { compareMembersForDisplay, isMemberPosition, sortRankOf } from './MemberPosition';
+import {
+  compareMembersForDisplay,
+  isMemberPosition,
+  MEMBER_POSITION_LABELS,
+  MEMBER_POSITIONS,
+  sortRankOf,
+} from './MemberPosition';
 
 describe('sortRankOf', () => {
   it('ranks PI first and Alumnus last', () => {
@@ -37,6 +43,14 @@ describe('compareMembersForDisplay', () => {
     ];
     const sorted = [...roster].sort(compareMembersForDisplay);
     expect(sorted.map((m) => m.name)).toEqual(['a', 'b', 'c', 'z']);
+  });
+});
+
+describe('MEMBER_POSITION_LABELS', () => {
+  it('has a human-readable label for every position', () => {
+    for (const position of MEMBER_POSITIONS) {
+      expect(MEMBER_POSITION_LABELS[position]).toBeTruthy();
+    }
   });
 });
 

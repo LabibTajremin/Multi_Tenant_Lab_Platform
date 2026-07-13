@@ -8,6 +8,7 @@ import { PostgresPublicationRepository } from '@/infrastructure/repositories/Pos
 import { PostgresPostRepository } from '@/infrastructure/repositories/PostgresPostRepository';
 import { listMembers } from '@/application/use-cases/members/ListMembers';
 import { PostgresMemberRepository } from '@/infrastructure/repositories/PostgresMemberRepository';
+import { MEMBER_POSITION_LABELS } from '@/domain/value-objects/MemberPosition';
 import CardCarousel from '@/components/public/CardCarousel';
 
 const CAROUSEL_SIZE = 8;
@@ -32,7 +33,7 @@ export default async function HomePage() {
 
   const latestNews = buildCarouselItems(featuredNews, news, CAROUSEL_SIZE);
   const latestPublications = buildCarouselItems(featuredPublications, publications, CAROUSEL_SIZE);
-  const peopleTeaser = members.slice(0, 4);
+  const peopleTeaser = members.filter((member) => member.position !== 'Alumnus').slice(0, CAROUSEL_SIZE);
   const researchHighlight = researchPosts[0];
 
   return (
@@ -157,21 +158,40 @@ export default async function HomePage() {
             Meet the team →
           </Link>
         </div>
-        <div className="mt-6 grid grid-cols-2 gap-6 sm:grid-cols-4">
-          {peopleTeaser.map((member) => (
-            <div key={member.id} className="text-center">
-              <div className={`mx-auto h-20 w-20 overflow-hidden rounded-full ${accent.bg100}`}>
-                {member.photoUrl && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={member.photoUrl} alt={member.photoAlt ?? member.fullName} className="h-full w-full object-cover" />
-                )}
-              </div>
-              <p className="mt-2 text-sm font-medium text-slate-900">{member.fullName}</p>
-              <p className="text-xs text-slate-500">{member.position}</p>
-            </div>
-          ))}
-          {peopleTeaser.length === 0 && <p className="text-slate-500">No team members listed yet.</p>}
-        </div>
+        {peopleTeaser.length > 0 ? (
+          <CardCarousel>
+            {peopleTeaser.map((member) => (
+              <Link
+                key={member.id}
+                href="/people"
+                className="w-48 shrink-0 snap-start overflow-hidden rounded-xl bg-white shadow-sm ring-1 ring-slate-200 transition hover:-translate-y-0.5 hover:shadow-md sm:w-56"
+              >
+                <div className={`aspect-square w-full overflow-hidden ${accent.bg100}`}>
+                  {member.photoUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={member.photoUrl}
+                      alt={member.photoAlt ?? member.fullName}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className={`flex h-full w-full items-center justify-center font-display text-4xl ${accent.text600}`}>
+                      {member.fullName.charAt(0)}
+                    </div>
+                  )}
+                </div>
+                <div className="p-4 text-center">
+                  <p className="font-display text-base font-semibold text-slate-900">{member.fullName}</p>
+                  <p className="mt-1 text-xs font-medium uppercase tracking-wide text-slate-500">
+                    {MEMBER_POSITION_LABELS[member.position]}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </CardCarousel>
+        ) : (
+          <p className="mt-6 text-slate-500">No team members listed yet.</p>
+        )}
       </section>
     </main>
   );
