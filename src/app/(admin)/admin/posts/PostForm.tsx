@@ -5,6 +5,8 @@ import type { Post } from '@/domain/entities/Post';
 import { POST_TYPES } from '@/domain/value-objects/PostType';
 import { initialFormState, type FormState } from '@/lib/formState';
 
+const POST_TYPE_LABELS: Record<string, string> = { funding: 'Funding', gallery: 'Gallery', research: 'Research' };
+
 function SubmitButton({ label }: { label: string }) {
   const { pending } = useFormStatus();
   return (
@@ -44,7 +46,7 @@ export default function PostForm({
           >
             {POST_TYPES.map((type) => (
               <option key={type} value={type}>
-                {type === 'funding' ? 'Funding' : 'Gallery'}
+                {POST_TYPE_LABELS[type]}
               </option>
             ))}
           </select>

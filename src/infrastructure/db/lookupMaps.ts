@@ -43,8 +43,8 @@ const ID_TO_POSITION: Record<number, MemberPosition> = {
   6: 'Alumnus',
 };
 
-const POST_TYPE_TO_ID: Record<PostType, number> = { funding: 1, gallery: 2 };
-const ID_TO_POST_TYPE: Record<number, PostType> = { 1: 'funding', 2: 'gallery' };
+const POST_TYPE_TO_ID: Record<PostType, number> = { funding: 1, gallery: 2, research: 3 };
+const ID_TO_POST_TYPE: Record<number, PostType> = { 1: 'funding', 2: 'gallery', 3: 'research' };
 
 const LINK_PLATFORM_TO_ID: Record<LinkPlatform, number> = {
   website: 1,

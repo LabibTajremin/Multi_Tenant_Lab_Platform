@@ -11,8 +11,27 @@ const accentPalette = {
   slate: { 50: '#eef1f4', 100: '#d6dde3', 300: '#8fa1b0', 500: '#3d5468', 600: '#324555', 700: '#263441' },
 };
 
+const ACCENT_NAMES = Object.keys(accentPalette);
+const ACCENT_SHADES = [50, 100, 300, 500, 600, 700];
+
 const config: Config = {
   content: ['./src/**/*.{ts,tsx}'],
+  // The tenant's chosen accent color (Section 9's curated palette) is only known
+  // at runtime — Tailwind's static content scan can't see a class name built via
+  // string interpolation like `bg-accent-${tenant.primaryColor}-500`, so every
+  // color/shade combination is safelisted explicitly instead.
+  safelist: ACCENT_NAMES.flatMap((name) =>
+    ACCENT_SHADES.flatMap((shade) => [
+      `bg-accent-${name}-${shade}`,
+      `text-accent-${name}-${shade}`,
+      `border-accent-${name}-${shade}`,
+      `ring-accent-${name}-${shade}`,
+      `hover:bg-accent-${name}-${shade}`,
+      `hover:text-accent-${name}-${shade}`,
+      `focus:border-accent-${name}-${shade}`,
+      `focus:ring-accent-${name}-${shade}`,
+    ]),
+  ),
   theme: {
     extend: {
       colors: {

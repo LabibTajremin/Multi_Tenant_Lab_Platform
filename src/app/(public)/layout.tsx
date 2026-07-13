@@ -1,5 +1,9 @@
 import { redirect } from 'next/navigation';
 import { isTenantProvisioned } from '@/lib/setupStatus';
+import { getCurrentTenant } from '@/lib/tenantContext';
+import { PostgresSiteSettingsRepository } from '@/infrastructure/repositories/PostgresSiteSettingsRepository';
+import SiteHeader from '@/components/public/SiteHeader';
+import SiteFooter from '@/components/public/SiteFooter';
 
 // Every page here reads live, per-deployment DB state (tenant settings, content),
 // so it can never be statically prerendered at build time — this build produces
@@ -12,5 +16,15 @@ export default async function PublicLayout({ children }: { children: React.React
   if (!provisioned) {
     redirect('/setup');
   }
-  return <>{children}</>;
+
+  const tenant = await getCurrentTenant();
+  const settings = await new PostgresSiteSettingsRepository().getByTenant(tenant.id);
+
+  return (
+    <div className="flex min-h-screen flex-col">
+      <SiteHeader tenant={tenant} />
+      <div className="flex-1">{children}</div>
+      <SiteFooter tenant={tenant} settings={settings} />
+    </div>
+  );
 }
