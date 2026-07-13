@@ -2,7 +2,7 @@ import { notFound, redirect } from 'next/navigation';
 import { PostgresPublicationRepository } from '@/infrastructure/repositories/PostgresPublicationRepository';
 import { getTenantId } from '@/lib/tenantContext';
 import { getSessionUser } from '@/lib/session';
-import { canEditContent } from '@/lib/rbac';
+import { canEditContent, canFeatureContent } from '@/lib/rbac';
 import PublicationForm from '../../PublicationForm';
 import { updatePublicationAction } from '../../actions';
 
@@ -28,7 +28,12 @@ export default async function EditPublicationPage({ params }: { params: { id: st
     <div>
       <h1 className="font-display text-2xl font-semibold text-slate-900">Edit publication</h1>
       <div className="mt-6">
-        <PublicationForm action={boundAction} publication={publication} submitLabel="Save changes" />
+        <PublicationForm
+          action={boundAction}
+          publication={publication}
+          submitLabel="Save changes"
+          canFeature={canFeatureContent(user)}
+        />
       </div>
     </div>
   );

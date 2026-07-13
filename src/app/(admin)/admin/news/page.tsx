@@ -37,7 +37,14 @@ export default async function NewsListPage() {
                 <td className="px-4 py-3 font-medium text-slate-900">{item.title}</td>
                 <td className="px-4 py-3 text-slate-700">{new Date(item.publishedDate).toLocaleDateString()}</td>
                 <td className="px-4 py-3">
-                  <StatusBadge status={item.status} />
+                  <div className="flex items-center gap-2">
+                    <StatusBadge status={item.status} />
+                    {item.isFeatured && (
+                      <span className="inline-block rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-700 ring-1 ring-inset ring-amber-200">
+                        ★ Featured
+                      </span>
+                    )}
+                  </div>
                 </td>
                 <td className="px-4 py-3 text-right space-x-3">
                   {canEditContent(user, item) && (

@@ -2,7 +2,7 @@ import { notFound, redirect } from 'next/navigation';
 import { PostgresNewsRepository } from '@/infrastructure/repositories/PostgresNewsRepository';
 import { getTenantId } from '@/lib/tenantContext';
 import { getSessionUser } from '@/lib/session';
-import { canEditContent } from '@/lib/rbac';
+import { canEditContent, canFeatureContent } from '@/lib/rbac';
 import NewsForm from '../../NewsForm';
 import { updateNewsItemAction } from '../../actions';
 
@@ -28,7 +28,12 @@ export default async function EditNewsItemPage({ params }: { params: { id: strin
     <div>
       <h1 className="font-display text-2xl font-semibold text-slate-900">Edit news item</h1>
       <div className="mt-6">
-        <NewsForm action={boundAction} newsItem={newsItem} submitLabel="Save changes" />
+        <NewsForm
+          action={boundAction}
+          newsItem={newsItem}
+          submitLabel="Save changes"
+          canFeature={canFeatureContent(user)}
+        />
       </div>
     </div>
   );

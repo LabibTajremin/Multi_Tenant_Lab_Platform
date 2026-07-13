@@ -22,10 +22,12 @@ export default function PublicationForm({
   action,
   publication,
   submitLabel,
+  canFeature = false,
 }: {
   action: (prevState: FormState, formData: FormData) => Promise<FormState>;
   publication?: Publication;
   submitLabel: string;
+  canFeature?: boolean;
 }) {
   const [state, formAction] = useFormState(action, initialFormState);
 
@@ -106,6 +108,23 @@ export default function PublicationForm({
         label="PDF"
         defaultValue={publication?.pdfUrl ?? ''}
       />
+
+      {canFeature && (
+        <div className="flex items-start gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2.5">
+          <input
+            id="isFeatured"
+            name="isFeatured"
+            type="checkbox"
+            defaultChecked={publication?.isFeatured ?? false}
+            className="mt-0.5 h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-500"
+          />
+          <label htmlFor="isFeatured" className="text-sm text-slate-700">
+            <span className="font-medium">Show on homepage</span>
+            <br />
+            Featured publications appear in the home page carousel, most recent first.
+          </label>
+        </div>
+      )}
 
       {state.error && (
         <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">

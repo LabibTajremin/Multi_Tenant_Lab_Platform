@@ -27,10 +27,12 @@ export default function NewsForm({
   action,
   newsItem,
   submitLabel,
+  canFeature = false,
 }: {
   action: (prevState: FormState, formData: FormData) => Promise<FormState>;
   newsItem?: NewsItem;
   submitLabel: string;
+  canFeature?: boolean;
 }) {
   const [state, formAction] = useFormState(action, initialFormState);
 
@@ -109,6 +111,23 @@ export default function NewsForm({
           className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
         />
       </div>
+
+      {canFeature && (
+        <div className="flex items-start gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2.5">
+          <input
+            id="isFeatured"
+            name="isFeatured"
+            type="checkbox"
+            defaultChecked={newsItem?.isFeatured ?? false}
+            className="mt-0.5 h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-500"
+          />
+          <label htmlFor="isFeatured" className="text-sm text-slate-700">
+            <span className="font-medium">Show on homepage</span>
+            <br />
+            Featured news items appear in the home page carousel, most recent first.
+          </label>
+        </div>
+      )}
 
       {state.error && (
         <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">

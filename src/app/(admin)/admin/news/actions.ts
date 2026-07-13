@@ -19,6 +19,7 @@ function parseInput(formData: FormData) {
     imageAlt: String(formData.get('imageAlt') ?? '') || undefined,
     linkUrl: String(formData.get('linkUrl') ?? '') || undefined,
     publishedDate: publishedDate || undefined,
+    isFeatured: formData.get('isFeatured') === 'on',
   };
 }
 

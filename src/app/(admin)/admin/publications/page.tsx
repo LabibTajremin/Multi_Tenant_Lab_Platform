@@ -40,7 +40,14 @@ export default async function PublicationsListPage() {
                 </td>
                 <td className="px-4 py-3 text-slate-700">{pub.year}</td>
                 <td className="px-4 py-3">
-                  <StatusBadge status={pub.status} />
+                  <div className="flex items-center gap-2">
+                    <StatusBadge status={pub.status} />
+                    {pub.isFeatured && (
+                      <span className="inline-block rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-700 ring-1 ring-inset ring-amber-200">
+                        ★ Featured
+                      </span>
+                    )}
+                  </div>
                 </td>
                 <td className="px-4 py-3 text-right space-x-3">
                   {canEditContent(user, pub) && (
