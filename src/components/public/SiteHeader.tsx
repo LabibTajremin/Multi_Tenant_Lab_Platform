@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Tenant } from '@/domain/entities/Tenant';
 import { resolveAccent, accentClasses } from '@/lib/accent';
+import MobileNav from './MobileNav';
 
 const NAV_LINKS = [
   { href: '/research', label: 'Research' },
@@ -16,7 +17,11 @@ export default function SiteHeader({ tenant }: { tenant: Tenant }) {
   const accent = accentClasses(resolveAccent(tenant.primaryColor));
 
   return (
-    <header className="border-b border-slate-200 bg-white/90 backdrop-blur">
+    // z-30 (not just relative) so this establishes its own stacking context —
+    // otherwise the mobile dropdown's z-index only competes with siblings
+    // inside header, and a sibling section below (e.g. the home page hero,
+    // itself position:relative) can still paint on top of it.
+    <header className="relative z-30 border-b border-slate-200 bg-white/90 backdrop-blur">
       <div className="mx-auto flex max-w-content items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3">
           {tenant.logoUrl ? (
@@ -36,6 +41,7 @@ export default function SiteHeader({ tenant }: { tenant: Tenant }) {
             </Link>
           ))}
         </nav>
+        <MobileNav links={NAV_LINKS} />
       </div>
     </header>
   );
