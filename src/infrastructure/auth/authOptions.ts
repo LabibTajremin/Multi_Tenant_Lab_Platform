@@ -1,8 +1,9 @@
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import bcrypt from 'bcryptjs';
 import { PostgresUserRepository } from '@/infrastructure/repositories/PostgresUserRepository';
 import { getTenantId } from '@/lib/tenantContext';
+import { loginUser } from '@/application/use-cases/auth/LoginUser';
+import { ValidationError } from '@/application/errors';
 
 // Credentials-only for now, but every provider-specific bit lives in this one file
 // (Section 10) so swapping in magic-link or university SSO later doesn't ripple
@@ -21,19 +22,19 @@ export const authOptions: NextAuthOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
-        }
-
         const tenantId = getTenantId();
         const users = new PostgresUserRepository();
-        const user = await users.findByEmail(tenantId, credentials.email);
-        if (!user || !user.isActive) {
-          return null;
-        }
 
-        const passwordMatches = await bcrypt.compare(credentials.password, user.passwordHash);
-        if (!passwordMatches) {
+        let user;
+        try {
+          user = await loginUser(tenantId, credentials, { userRepo: users });
+        } catch (error) {
+          if (error instanceof ValidationError) {
+            return null;
+          }
+          throw error;
+        }
+        if (!user) {
           return null;
         }
 
