@@ -13,7 +13,7 @@ function SubmitButton({ label }: { label: string }) {
     <button
       type="submit"
       disabled={pending}
-      className="rounded-md bg-slate-900 px-4 py-2.5 font-medium text-white transition hover:bg-slate-800 disabled:opacity-60"
+      className="rounded-md bg-slate-900 px-4 py-2.5 font-medium text-white transition hover:bg-slate-800 disabled:opacity-60 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-300"
     >
       {pending ? 'Saving…' : label}
     </button>
@@ -51,7 +51,7 @@ export default function MemberForm({
   return (
     <form action={formAction} className="max-w-2xl space-y-5">
       <div>
-        <label htmlFor="fullName" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="fullName" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
           Full name <span className="text-red-600">*</span>
         </label>
         <input
@@ -60,12 +60,12 @@ export default function MemberForm({
           required
           readOnly={!canEditStructuralFields}
           defaultValue={member?.fullName}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 read-only:bg-slate-100"
+          className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 read-only:bg-slate-100 dark:read-only:bg-slate-700 dark:bg-slate-800 dark:text-slate-100"
         />
       </div>
 
       <div>
-        <label htmlFor="position" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="position" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
           Position <span className="text-red-600">*</span>
         </label>
         {/* A disabled <select> submits nothing, so structural-field-locked forms
@@ -78,7 +78,7 @@ export default function MemberForm({
           required={canEditStructuralFields}
           disabled={!canEditStructuralFields}
           defaultValue={member?.position ?? 'PhD'}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 disabled:bg-slate-100"
+          className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 disabled:bg-slate-100 dark:disabled:bg-slate-700 dark:bg-slate-800 dark:text-slate-100"
         >
           {MEMBER_POSITIONS.map((position) => (
             <option key={position} value={position}>
@@ -89,7 +89,7 @@ export default function MemberForm({
       </div>
 
       <div>
-        <label htmlFor="bio" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="bio" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
           Short bio
         </label>
         <textarea
@@ -97,12 +97,12 @@ export default function MemberForm({
           name="bio"
           rows={4}
           defaultValue={member?.bio ?? ''}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+          className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
         />
       </div>
 
       <div>
-        <label htmlFor="contactEmail" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="contactEmail" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
           Contact email
         </label>
         <input
@@ -110,7 +110,7 @@ export default function MemberForm({
           name="contactEmail"
           type="email"
           defaultValue={member?.contactEmail ?? ''}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+          className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
         />
       </div>
 
@@ -123,20 +123,20 @@ export default function MemberForm({
       />
 
       <div>
-        <label htmlFor="photoAlt" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="photoAlt" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
           Photo alt text {`(required if a photo is set)`}
         </label>
         <input
           id="photoAlt"
           name="photoAlt"
           defaultValue={member?.photoAlt ?? ''}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+          className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
         />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label htmlFor="joinDate" className="block text-sm font-medium text-slate-700">
+          <label htmlFor="joinDate" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
             Join date
           </label>
           <input
@@ -145,11 +145,11 @@ export default function MemberForm({
             type="date"
             readOnly={!canEditStructuralFields}
             defaultValue={toDateInputValue(member?.joinDate)}
-            className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 read-only:bg-slate-100"
+            className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 read-only:bg-slate-100 dark:read-only:bg-slate-700 dark:bg-slate-800 dark:text-slate-100"
           />
         </div>
         <div>
-          <label htmlFor="leaveDate" className="block text-sm font-medium text-slate-700">
+          <label htmlFor="leaveDate" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
             Leave date
           </label>
           <input
@@ -158,17 +158,17 @@ export default function MemberForm({
             type="date"
             readOnly={!canEditStructuralFields}
             defaultValue={toDateInputValue(member?.leaveDate)}
-            className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 read-only:bg-slate-100"
+            className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 read-only:bg-slate-100 dark:read-only:bg-slate-700 dark:bg-slate-800 dark:text-slate-100"
           />
         </div>
       </div>
 
       <fieldset>
-        <legend className="block text-sm font-medium text-slate-700">Links</legend>
+        <legend className="block text-sm font-medium text-slate-700 dark:text-slate-300">Links</legend>
         <div className="mt-2 space-y-2">
           {LINK_PLATFORMS.map((platform) => (
             <div key={platform}>
-              <label htmlFor={`link_${platform}`} className="block text-xs font-medium text-slate-500">
+              <label htmlFor={`link_${platform}`} className="block text-xs font-medium text-slate-500 dark:text-slate-400">
                 {PLATFORM_LABELS[platform]}
               </label>
               <input
@@ -176,7 +176,7 @@ export default function MemberForm({
                 name={`link_${platform}`}
                 type="url"
                 defaultValue={linkFor(platform)}
-                className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+                className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
               />
             </div>
           ))}

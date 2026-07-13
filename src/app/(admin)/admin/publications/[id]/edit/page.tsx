@@ -26,7 +26,7 @@ export default async function EditPublicationPage({ params }: { params: { id: st
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-slate-900">Edit publication</h1>
+      <h1 className="font-display text-2xl font-semibold text-slate-900 dark:text-slate-100">Edit publication</h1>
       <div className="mt-6">
         <PublicationForm
           action={boundAction}

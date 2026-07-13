@@ -15,15 +15,15 @@ export default async function PublicationsListPage() {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="font-display text-2xl font-semibold text-slate-900">Publications</h1>
-        <Link href="/admin/publications/new" className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800">
+        <h1 className="font-display text-2xl font-semibold text-slate-900 dark:text-slate-100">Publications</h1>
+        <Link href="/admin/publications/new" className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-300">
           + Add publication
         </Link>
       </div>
 
-      <div className="mt-6 overflow-x-auto rounded-lg border border-slate-200 bg-white">
-        <table className="min-w-full divide-y divide-slate-200 text-sm">
-          <thead className="bg-slate-50 text-left text-xs font-medium uppercase tracking-wide text-slate-500">
+      <div className="mt-6 overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+        <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700 text-sm">
+          <thead className="bg-slate-50 dark:bg-slate-800/50 text-left text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
             <tr>
               <th className="px-4 py-3">Title</th>
               <th className="px-4 py-3">Year</th>
@@ -31,14 +31,14 @@ export default async function PublicationsListPage() {
               <th className="px-4 py-3" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
             {publications.map((pub) => (
               <tr key={pub.id}>
                 <td className="px-4 py-3">
-                  <p className="font-medium text-slate-900">{pub.title}</p>
-                  <p className="text-slate-500">{pub.authors}</p>
+                  <p className="font-medium text-slate-900 dark:text-slate-100">{pub.title}</p>
+                  <p className="text-slate-500 dark:text-slate-400">{pub.authors}</p>
                 </td>
-                <td className="px-4 py-3 text-slate-700">{pub.year}</td>
+                <td className="px-4 py-3 text-slate-700 dark:text-slate-300">{pub.year}</td>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2">
                     <StatusBadge status={pub.status} />
@@ -51,7 +51,7 @@ export default async function PublicationsListPage() {
                 </td>
                 <td className="px-4 py-3 text-right space-x-3">
                   {canEditContent(user, pub) && (
-                    <Link href={`/admin/publications/${pub.id}/edit`} className="text-slate-700 hover:underline">
+                    <Link href={`/admin/publications/${pub.id}/edit`} className="text-slate-700 dark:text-slate-300 hover:underline">
                       Edit
                     </Link>
                   )}
@@ -67,7 +67,7 @@ export default async function PublicationsListPage() {
             ))}
             {publications.length === 0 && (
               <tr>
-                <td colSpan={4} className="px-4 py-8 text-center text-slate-500">
+                <td colSpan={4} className="px-4 py-8 text-center text-slate-500 dark:text-slate-400">
                   No publications yet.
                 </td>
               </tr>

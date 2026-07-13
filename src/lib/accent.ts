@@ -20,10 +20,14 @@ export function accentClasses(accent: AccentColor) {
     bg500: `bg-accent-${accent}-500`,
     bg600: `bg-accent-${accent}-600`,
     hoverBg600: `hover:bg-accent-${accent}-600`,
-    text500: `text-accent-${accent}-500`,
-    text600: `text-accent-${accent}-600`,
-    text700: `text-accent-${accent}-700`,
-    border300: `border-accent-${accent}-300`,
+    hoverText600: `hover:text-accent-${accent}-600 dark:hover:text-accent-${accent}-300`,
+    // Links/emphasis text uses the 600/700 shade in light mode, but that reads
+    // as near-black on a dark background — the 300 shade (already safelisted)
+    // keeps the same accent hue legible against a dark page.
+    text500: `text-accent-${accent}-500 dark:text-accent-${accent}-300`,
+    text600: `text-accent-${accent}-600 dark:text-accent-${accent}-300`,
+    text700: `text-accent-${accent}-700 dark:text-accent-${accent}-300`,
+    border300: `border-accent-${accent}-300 dark:border-accent-${accent}-500`,
     ring500: `ring-accent-${accent}-500`,
     focusRing500: `focus:ring-accent-${accent}-500`,
     focusBorder500: `focus:border-accent-${accent}-500`,

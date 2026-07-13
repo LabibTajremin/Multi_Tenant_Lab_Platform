@@ -26,7 +26,7 @@ export default async function EditMemberPage({ params }: { params: { id: string 
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-slate-900">Edit member</h1>
+      <h1 className="font-display text-2xl font-semibold text-slate-900 dark:text-slate-100">Edit member</h1>
       <div className="mt-6">
         <MemberForm
           action={boundAction}

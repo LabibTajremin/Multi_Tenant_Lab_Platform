@@ -55,7 +55,7 @@ export default function FileUploadField({
 
   return (
     <div>
-      <label htmlFor={`${name}-url`} className="block text-sm font-medium text-slate-700">
+      <label htmlFor={`${name}-url`} className="block text-sm font-medium text-slate-700 dark:text-slate-300">
         {label}
       </label>
       <div className="mt-1 flex gap-2">
@@ -66,9 +66,9 @@ export default function FileUploadField({
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="https://…"
-          className="block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+          className="block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
         />
-        <label className="flex cursor-pointer items-center whitespace-nowrap rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+        <label className="flex cursor-pointer items-center whitespace-nowrap rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">
           {uploading ? 'Uploading…' : 'Upload'}
           <input ref={fileInputRef} type="file" accept={accept} onChange={handleFileChange} disabled={uploading} className="sr-only" />
         </label>

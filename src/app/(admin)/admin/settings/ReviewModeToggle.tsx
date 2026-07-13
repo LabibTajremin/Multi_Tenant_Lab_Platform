@@ -13,9 +13,9 @@ export default function ReviewModeToggle({ enabled }: { enabled: boolean }) {
         checked={enabled}
         disabled={isPending}
         onChange={(e) => startTransition(() => toggleReviewModeAction(e.target.checked))}
-        className="h-5 w-5 rounded border-slate-300 text-slate-900 focus:ring-slate-500"
+        className="h-5 w-5 rounded border-slate-300 dark:border-slate-600 text-slate-900 dark:text-slate-100 focus:ring-slate-500"
       />
-      <span className="text-sm text-slate-700">
+      <span className="text-sm text-slate-700 dark:text-slate-300">
         Require Admin approval before Editor content goes live
       </span>
     </label>

@@ -1,7 +1,7 @@
 import type { ContentStatus } from '@/domain/value-objects/ContentStatus';
 
 const STYLES: Record<ContentStatus, string> = {
-  draft: 'bg-slate-100 text-slate-700',
+  draft: 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300',
   pending_review: 'bg-amber-100 text-amber-800',
   published: 'bg-green-100 text-green-800',
   rejected: 'bg-red-100 text-red-800',

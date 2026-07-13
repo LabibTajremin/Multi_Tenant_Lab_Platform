@@ -48,23 +48,23 @@ export default async function ReviewQueuePage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-slate-900">Review queue</h1>
-      <p className="mt-1 text-sm text-slate-600">
+      <h1 className="font-display text-2xl font-semibold text-slate-900 dark:text-slate-100">Review queue</h1>
+      <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
         Editor submissions wait here until an Admin approves or rejects them (Section 7 review mode is on).
       </p>
 
       <div className="mt-6 space-y-4">
         {rows.map((row) => (
-          <div key={`${row.kind}-${row.id}`} className="rounded-lg border border-slate-200 bg-white p-4">
+          <div key={`${row.kind}-${row.id}`} className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4">
             <div className="flex items-center justify-between">
               <div>
-                <span className="inline-block rounded-full bg-slate-100 px-2 py-0.5 text-xs font-medium text-slate-600">
+                <span className="inline-block rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-xs font-medium text-slate-600 dark:text-slate-400">
                   {KIND_LABEL[row.kind]}
                 </span>
-                <p className="mt-1 font-medium text-slate-900">{row.title}</p>
+                <p className="mt-1 font-medium text-slate-900 dark:text-slate-100">{row.title}</p>
               </div>
               <div className="flex items-center gap-3">
-                <Link href={EDIT_HREF[row.kind](row.id)} className="text-sm text-slate-700 hover:underline">
+                <Link href={EDIT_HREF[row.kind](row.id)} className="text-sm text-slate-700 dark:text-slate-300 hover:underline">
                   Edit
                 </Link>
                 <form action={approveItemAction.bind(null, row.kind, row.id)}>
@@ -81,7 +81,7 @@ export default async function ReviewQueuePage() {
                   name="note"
                   required
                   placeholder="Why is this being rejected?"
-                  className="flex-1 rounded-md border border-slate-300 px-3 py-1.5 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+                  className="flex-1 rounded-md border border-slate-300 dark:border-slate-600 px-3 py-1.5 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
                 />
                 <button type="submit" className="rounded-md bg-red-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-red-700">
                   Reject
@@ -91,7 +91,7 @@ export default async function ReviewQueuePage() {
           </div>
         ))}
         {rows.length === 0 && (
-          <p className="rounded-lg border border-dashed border-slate-300 px-4 py-8 text-center text-slate-500">
+          <p className="rounded-lg border border-dashed border-slate-300 dark:border-slate-600 px-4 py-8 text-center text-slate-500 dark:text-slate-400">
             Nothing waiting for review.
           </p>
         )}

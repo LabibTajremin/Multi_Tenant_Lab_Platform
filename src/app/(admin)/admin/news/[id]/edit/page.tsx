@@ -26,7 +26,7 @@ export default async function EditNewsItemPage({ params }: { params: { id: strin
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-slate-900">Edit news item</h1>
+      <h1 className="font-display text-2xl font-semibold text-slate-900 dark:text-slate-100">Edit news item</h1>
       <div className="mt-6">
         <NewsForm
           action={boundAction}

@@ -20,11 +20,11 @@ export default async function UsersPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-slate-900">Users</h1>
+      <h1 className="font-display text-2xl font-semibold text-slate-900 dark:text-slate-100">Users</h1>
 
-      <div className="mt-6 overflow-x-auto rounded-lg border border-slate-200 bg-white">
-        <table className="min-w-full divide-y divide-slate-200 text-sm">
-          <thead className="bg-slate-50 text-left text-xs font-medium uppercase tracking-wide text-slate-500">
+      <div className="mt-6 overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+        <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700 text-sm">
+          <thead className="bg-slate-50 dark:bg-slate-800/50 text-left text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
             <tr>
               <th className="px-4 py-3">Name</th>
               <th className="px-4 py-3">Email</th>
@@ -33,16 +33,16 @@ export default async function UsersPage() {
               <th className="px-4 py-3" />
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
             {users.map((u) => (
               <tr key={u.id}>
-                <td className="px-4 py-3 font-medium text-slate-900">{u.displayName}</td>
-                <td className="px-4 py-3 text-slate-700">{u.email}</td>
-                <td className="px-4 py-3 capitalize text-slate-700">{u.role}</td>
+                <td className="px-4 py-3 font-medium text-slate-900 dark:text-slate-100">{u.displayName}</td>
+                <td className="px-4 py-3 text-slate-700 dark:text-slate-300">{u.email}</td>
+                <td className="px-4 py-3 capitalize text-slate-700 dark:text-slate-300">{u.role}</td>
                 <td className="px-4 py-3">
                   <span
                     className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                      u.isActive ? 'bg-green-100 text-green-800' : 'bg-slate-100 text-slate-600'
+                      u.isActive ? 'bg-green-100 text-green-800' : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                     }`}
                   >
                     {u.isActive ? 'Active' : 'Deactivated'}
@@ -53,7 +53,7 @@ export default async function UsersPage() {
                     <ResetPasswordButton userId={u.id} />
                     {u.id !== user?.id && (
                       <form action={toggleUserActiveAction.bind(null, u.id, !u.isActive)}>
-                        <button type="submit" className="text-slate-700 hover:underline">
+                        <button type="submit" className="text-slate-700 dark:text-slate-300 hover:underline">
                           {u.isActive ? 'Deactivate' : 'Reactivate'}
                         </button>
                       </form>
@@ -66,7 +66,7 @@ export default async function UsersPage() {
         </table>
       </div>
 
-      <h2 className="mt-10 font-display text-xl font-semibold text-slate-900">Add an Editor</h2>
+      <h2 className="mt-10 font-display text-xl font-semibold text-slate-900 dark:text-slate-100">Add an Editor</h2>
       <div className="mt-4">
         <CreateEditorForm />
       </div>

@@ -16,6 +16,9 @@ const ACCENT_SHADES = [50, 100, 300, 500, 600, 700];
 
 const config: Config = {
   content: ['./src/**/*.{ts,tsx}'],
+  // Explicit toggle (persisted in localStorage), not the OS preference media
+  // query — a visitor's choice should stick regardless of their system theme.
+  darkMode: 'class',
   // The tenant's chosen accent color (Section 9's curated palette) is only known
   // at runtime — Tailwind's static content scan can't see a class name built via
   // string interpolation like `bg-accent-${tenant.primaryColor}-500`, so every
@@ -30,6 +33,10 @@ const config: Config = {
       `hover:text-accent-${name}-${shade}`,
       `focus:border-accent-${name}-${shade}`,
       `focus:ring-accent-${name}-${shade}`,
+      `dark:bg-accent-${name}-${shade}`,
+      `dark:text-accent-${name}-${shade}`,
+      `dark:border-accent-${name}-${shade}`,
+      `dark:hover:text-accent-${name}-${shade}`,
     ]),
   ),
   theme: {

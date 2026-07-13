@@ -22,7 +22,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <div className="w-64 shrink-0">
         <AdminNav actor={user} reviewEnabled={tenant.reviewEnabled} />
       </div>
-      <div className="flex-1 bg-slate-50 px-8 py-8">{children}</div>
+      <div className="flex-1 bg-slate-50 dark:bg-slate-800/50 px-8 py-8">{children}</div>
     </div>
   );
 }
