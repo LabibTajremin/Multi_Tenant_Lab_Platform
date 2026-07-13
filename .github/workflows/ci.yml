@@ -82,14 +82,6 @@ jobs:
           --health-interval 5s
           --health-timeout 5s
           --health-retries 10
-      minio:
-        image: bitnami/minio:latest
-        env:
-          MINIO_ROOT_USER: minioadmin
-          MINIO_ROOT_PASSWORD: minioadmin
-          MINIO_DEFAULT_BUCKETS: lab-platform
-        ports:
-          - 9000:9000
     env:
       DATABASE_URL: postgres://postgres:postgres@localhost:5434/lab_platform_e2e
       TENANT_ID: 00000000-0000-4000-8000-000000000001
@@ -110,6 +102,24 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
+      - name: Start MinIO (S3-compatible storage mock)
+        # GitHub Actions "services:" containers can't override the image's CMD, and the
+        # official minio/minio image needs explicit args to run as a server, so it's
+        # started directly with `docker run` instead of as a service container.
+        run: |
+          docker run -d --name minio -p 9000:9000 \
+            -e MINIO_ROOT_USER=minioadmin \
+            -e MINIO_ROOT_PASSWORD=minioadmin \
+            minio/minio server /data
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:9000/minio/health/live && break
+            sleep 1
+          done
+      - name: Create MinIO bucket
+        run: |
+          docker run --rm --network host \
+            -e MC_HOST_local=http://minioadmin:minioadmin@localhost:9000 \
+            minio/mc mb --ignore-existing local/lab-platform
       - run: npm run migrate:up
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v4
