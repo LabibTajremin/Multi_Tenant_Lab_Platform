@@ -1,4 +1,6 @@
+import { redirect } from 'next/navigation';
 import { getCurrentTenant } from '@/lib/tenantContext';
+import { getSessionUser } from '@/lib/session';
 import { ACCENT_COLORS } from '@/lib/theme';
 import { completeSetup } from './actions';
 
@@ -7,6 +9,14 @@ import { completeSetup } from './actions';
 export const dynamic = 'force-dynamic';
 
 export default async function SetupPage() {
+  // Gated behind the Admin account provision-tenant.ts created — an
+  // unauthenticated visitor who reaches this deployment before its real Admin
+  // logs in gets sent to /login rather than seeing (or completing) this form.
+  const user = await getSessionUser();
+  if (!user || user.role !== 'admin') {
+    redirect('/login');
+  }
+
   const tenant = await getCurrentTenant();
 
   return (
