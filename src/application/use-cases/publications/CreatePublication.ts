@@ -25,6 +25,9 @@ export async function createPublication(
   }
 
   const status = resolveSubmissionStatus(ctx.actor!.role, ctx.reviewEnabled);
+  // Curating what shows on the home page is an Admin decision — silently
+  // ignore the flag if an Editor's submission happened to include it.
+  const isFeatured = ctx.actor!.role === 'admin' ? parsed.data.isFeatured : undefined;
 
   return deps.repo.create({
     tenantId: ctx.tenantId,
@@ -35,6 +38,7 @@ export async function createPublication(
     doiOrLink: parsed.data.doiOrLink,
     pdfUrl: parsed.data.pdfUrl,
     status,
+    isFeatured,
     createdBy: ctx.actor!.id,
   });
 }

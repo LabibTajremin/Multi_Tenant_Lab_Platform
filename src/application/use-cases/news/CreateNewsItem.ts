@@ -21,6 +21,9 @@ export async function createNewsItem(input: unknown, ctx: UseCaseContext, deps: 
   }
 
   const status = resolveSubmissionStatus(ctx.actor!.role, ctx.reviewEnabled);
+  // Curating what shows on the home page is an Admin decision — silently
+  // ignore the flag if an Editor's submission happened to include it.
+  const isFeatured = ctx.actor!.role === 'admin' ? parsed.data.isFeatured : undefined;
 
   return deps.repo.create({
     tenantId: ctx.tenantId,
@@ -31,6 +34,7 @@ export async function createNewsItem(input: unknown, ctx: UseCaseContext, deps: 
     linkUrl: parsed.data.linkUrl,
     publishedDate: parsed.data.publishedDate,
     status,
+    isFeatured,
     createdBy: ctx.actor!.id,
   });
 }

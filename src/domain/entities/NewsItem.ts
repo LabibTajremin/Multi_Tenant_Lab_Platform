@@ -10,6 +10,7 @@ export interface NewsItem {
   linkUrl: string | null;
   status: ContentStatus;
   reviewNote: string | null;
+  isFeatured: boolean;
   createdBy: string;
   reviewedBy: string | null;
   publishedDate: Date;

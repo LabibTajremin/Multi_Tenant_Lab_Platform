@@ -22,6 +22,7 @@ interface PublicationRow {
   pdf_url: string | null;
   status_id: number;
   review_note: string | null;
+  is_featured: boolean;
   created_by: string;
   reviewed_by: string | null;
   created_at: Date;
@@ -40,6 +41,7 @@ function toEntity(row: PublicationRow): Publication {
     pdfUrl: row.pdf_url,
     status: idToStatus(row.status_id),
     reviewNote: row.review_note,
+    isFeatured: row.is_featured,
     createdBy: row.created_by,
     reviewedBy: row.reviewed_by,
     createdAt: row.created_at,
@@ -83,6 +85,21 @@ export class PostgresPublicationRepository implements IPublicationRepository {
     });
   }
 
+  // Home page carousel: Admin-curated subset (Section 12 redesign). Backed by
+  // idx_publications_featured (tenant_id, year DESC) WHERE is_featured AND published.
+  async listFeatured(tenantId: string, limit: number): Promise<Publication[]> {
+    return withTenantScope(tenantId, async (client) => {
+      const result = await client.query<PublicationRow>(
+        `SELECT * FROM publications
+         WHERE tenant_id = $1 AND status_id = $2 AND is_featured = true
+         ORDER BY year DESC, created_at DESC
+         LIMIT $3`,
+        [tenantId, PUBLISHED_STATUS_ID, limit],
+      );
+      return result.rows.map(toEntity);
+    });
+  }
+
   async listAll(tenantId: string): Promise<Publication[]> {
     return withTenantScope(tenantId, async (client) => {
       const result = await client.query<PublicationRow>(
@@ -106,8 +123,8 @@ export class PostgresPublicationRepository implements IPublicationRepository {
   async create(input: NewPublicationInput): Promise<Publication> {
     return withTenantScope(input.tenantId, async (client) => {
       const result = await client.query<PublicationRow>(
-        `INSERT INTO publications (tenant_id, title, authors, venue, year, doi_or_link, pdf_url, status_id, created_by)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+        `INSERT INTO publications (tenant_id, title, authors, venue, year, doi_or_link, pdf_url, status_id, is_featured, created_by)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
          RETURNING *`,
         [
           input.tenantId,
@@ -118,6 +135,7 @@ export class PostgresPublicationRepository implements IPublicationRepository {
           input.doiOrLink ?? null,
           input.pdfUrl ?? null,
           statusToId(input.status),
+          input.isFeatured ?? false,
           input.createdBy,
         ],
       );
@@ -142,6 +160,7 @@ export class PostgresPublicationRepository implements IPublicationRepository {
            status_id = COALESCE($9, status_id),
            review_note = COALESCE($10, review_note),
            reviewed_by = COALESCE($11, reviewed_by),
+           is_featured = COALESCE($12, is_featured),
            updated_at = now()
          WHERE tenant_id = $1 AND id = $2
          RETURNING *`,
@@ -157,6 +176,7 @@ export class PostgresPublicationRepository implements IPublicationRepository {
           patch.status ? statusToId(patch.status) : null,
           patch.reviewNote,
           patch.reviewedBy,
+          patch.isFeatured,
         ],
       );
       const row = result.rows[0];

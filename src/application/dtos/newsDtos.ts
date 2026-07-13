@@ -7,6 +7,7 @@ const baseNewsItemSchema = z.object({
   imageAlt: z.string().trim().max(300).optional(),
   linkUrl: z.string().trim().url('Link must be a valid URL').optional(),
   publishedDate: z.coerce.date().optional(),
+  isFeatured: z.boolean().optional(),
 });
 
 // Section 9.1: alt text is required on every image upload, for accessibility.

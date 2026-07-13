@@ -13,6 +13,7 @@ export const createPublicationSchema = z.object({
     .max(currentYear + 1, `Year must be ${currentYear + 1} or earlier`),
   doiOrLink: z.string().trim().url('DOI/link must be a valid URL').optional(),
   pdfUrl: z.string().trim().url('PDF URL must be valid').optional(),
+  isFeatured: z.boolean().optional(),
 });
 
 export const updatePublicationSchema = createPublicationSchema.partial();

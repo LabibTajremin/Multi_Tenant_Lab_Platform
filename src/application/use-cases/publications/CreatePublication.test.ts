@@ -74,4 +74,22 @@ describe('createPublication', () => {
 
     expect(repo.create).toHaveBeenCalledWith(expect.objectContaining({ tenantId: 'tenant-xyz' }));
   });
+
+  it('home-page curation: Admin can mark a publication as featured on create', async () => {
+    const repo = mock<IPublicationRepository>();
+    repo.create.mockResolvedValue(makePublication());
+
+    await createPublication({ ...validInput, isFeatured: true }, ctx({ actor: admin }), { repo });
+
+    expect(repo.create).toHaveBeenCalledWith(expect.objectContaining({ isFeatured: true }));
+  });
+
+  it('home-page curation: an Editor cannot set isFeatured — it is silently ignored', async () => {
+    const repo = mock<IPublicationRepository>();
+    repo.create.mockResolvedValue(makePublication());
+
+    await createPublication({ ...validInput, isFeatured: true }, ctx({ actor: editor }), { repo });
+
+    expect(repo.create).toHaveBeenCalledWith(expect.objectContaining({ isFeatured: undefined }));
+  });
 });

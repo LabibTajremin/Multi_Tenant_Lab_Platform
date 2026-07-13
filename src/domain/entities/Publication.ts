@@ -11,6 +11,7 @@ export interface Publication {
   pdfUrl: string | null;
   status: ContentStatus;
   reviewNote: string | null;
+  isFeatured: boolean;
   createdBy: string;
   reviewedBy: string | null;
   createdAt: Date;

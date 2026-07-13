@@ -16,6 +16,7 @@ interface NewsRow {
   link_url: string | null;
   status_id: number;
   review_note: string | null;
+  is_featured: boolean;
   created_by: string;
   reviewed_by: string | null;
   published_date: Date;
@@ -34,6 +35,7 @@ function toEntity(row: NewsRow): NewsItem {
     linkUrl: row.link_url,
     status: idToStatus(row.status_id),
     reviewNote: row.review_note,
+    isFeatured: row.is_featured,
     createdBy: row.created_by,
     reviewedBy: row.reviewed_by,
     publishedDate: row.published_date,
@@ -65,6 +67,21 @@ export class PostgresNewsRepository implements INewsRepository {
     });
   }
 
+  // Home page carousel: Admin-curated subset (Section 12 redesign). Backed by
+  // idx_news_featured (tenant_id, published_date DESC) WHERE is_featured AND published.
+  async listFeatured(tenantId: string, limit: number): Promise<NewsItem[]> {
+    return withTenantScope(tenantId, async (client) => {
+      const result = await client.query<NewsRow>(
+        `SELECT * FROM news_items
+         WHERE tenant_id = $1 AND status_id = $2 AND is_featured = true
+         ORDER BY published_date DESC
+         LIMIT $3`,
+        [tenantId, PUBLISHED_STATUS_ID, limit],
+      );
+      return result.rows.map(toEntity);
+    });
+  }
+
   async listAll(tenantId: string): Promise<NewsItem[]> {
     return withTenantScope(tenantId, async (client) => {
       const result = await client.query<NewsRow>(
@@ -88,8 +105,8 @@ export class PostgresNewsRepository implements INewsRepository {
   async create(input: NewNewsItemInput): Promise<NewsItem> {
     return withTenantScope(input.tenantId, async (client) => {
       const result = await client.query<NewsRow>(
-        `INSERT INTO news_items (tenant_id, title, body, image_url, image_alt, link_url, status_id, created_by, published_date)
-         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, COALESCE($9, CURRENT_DATE))
+        `INSERT INTO news_items (tenant_id, title, body, image_url, image_alt, link_url, status_id, is_featured, created_by, published_date)
+         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, COALESCE($10, CURRENT_DATE))
          RETURNING *`,
         [
           input.tenantId,
@@ -99,6 +116,7 @@ export class PostgresNewsRepository implements INewsRepository {
           input.imageAlt ?? null,
           input.linkUrl ?? null,
           statusToId(input.status),
+          input.isFeatured ?? false,
           input.createdBy,
           input.publishedDate ?? null,
         ],
@@ -124,6 +142,7 @@ export class PostgresNewsRepository implements INewsRepository {
            review_note = COALESCE($9, review_note),
            reviewed_by = COALESCE($10, reviewed_by),
            published_date = COALESCE($11, published_date),
+           is_featured = COALESCE($12, is_featured),
            updated_at = now()
          WHERE tenant_id = $1 AND id = $2
          RETURNING *`,
@@ -139,6 +158,7 @@ export class PostgresNewsRepository implements INewsRepository {
           patch.reviewNote,
           patch.reviewedBy,
           patch.publishedDate,
+          patch.isFeatured,
         ],
       );
       const row = result.rows[0];

@@ -91,4 +91,27 @@ describe('updatePublication', () => {
     expect(repo.findById).toHaveBeenCalledWith('tenant-xyz', existing.id);
     expect(repo.update).toHaveBeenCalledWith('tenant-xyz', existing.id, expect.anything());
   });
+
+  it('home-page curation: Admin can feature/unfeature a publication', async () => {
+    const repo = mock<IPublicationRepository>();
+    const existing = makePublication({ tenantId: 'tenant-1', createdBy: admin.id });
+    repo.findById.mockResolvedValue(existing);
+    repo.update.mockResolvedValue(existing);
+
+    await updatePublication(existing.id, { isFeatured: true }, ctx({ actor: admin }), { repo });
+
+    expect(repo.update).toHaveBeenCalledWith('tenant-1', existing.id, expect.objectContaining({ isFeatured: true }));
+  });
+
+  it('home-page curation: an Editor cannot feature their own publication — the flag is silently ignored', async () => {
+    const repo = mock<IPublicationRepository>();
+    const existing = makePublication({ tenantId: 'tenant-1', createdBy: editor.id, status: 'draft' });
+    repo.findById.mockResolvedValue(existing);
+    repo.update.mockResolvedValue(existing);
+
+    await updatePublication(existing.id, { isFeatured: true }, ctx({ actor: editor }), { repo });
+
+    const patch = repo.update.mock.calls[0]?.[2];
+    expect(patch?.isFeatured).toBeUndefined();
+  });
 });
