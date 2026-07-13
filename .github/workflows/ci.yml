@@ -84,7 +84,9 @@ jobs:
           --health-retries 10
     env:
       DATABASE_URL: postgres://postgres:postgres@localhost:5434/lab_platform_e2e
-      TENANT_ID: 00000000-0000-4000-8000-000000000001
+      # TENANT_ID is intentionally not set here — the "Seed demo tenant" step below
+      # provisions a real tenant and appends its actual id to $GITHUB_ENV, since a
+      # made-up UUID wouldn't match any row in the freshly-migrated e2e database.
       NEXTAUTH_SECRET: e2e-test-secret
       NEXTAUTH_URL: http://localhost:3000
       STORAGE_ENDPOINT: http://localhost:9000
@@ -121,6 +123,10 @@ jobs:
             -e MC_HOST_local=http://minioadmin:minioadmin@localhost:9000 \
             minio/mc mb --ignore-existing local/lab-platform
       - run: npm run migrate:up
+      - name: Seed demo tenant
+        run: npm run seed-demo-tenant | tee /tmp/seed-output.txt
+      - name: Export TENANT_ID from seed output
+        run: grep '^TENANT_ID=' /tmp/seed-output.txt >> "$GITHUB_ENV"
       - run: npm run test:e2e
       - uses: actions/upload-artifact@v4
         if: always()
