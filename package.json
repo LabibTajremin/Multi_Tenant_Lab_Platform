@@ -16,6 +16,8 @@
     "migrate:down": "node-pg-migrate down -m src/infrastructure/db/migrations",
     "provision-tenant": "tsx scripts/provision-tenant.ts",
     "seed-demo-tenant": "tsx scripts/seed-demo-tenant.ts",
+    "seed-load-test": "tsx scripts/seed-load-test.ts",
+    "explain-query-plans": "tsx scripts/explain-query-plans.ts",
     "export-tenant": "tsx scripts/export-tenant.ts",
     "test:unit": "vitest run src/domain src/application src/lib",
     "test:unit:watch": "vitest src/domain src/application src/lib",
