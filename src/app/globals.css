@@ -11,3 +11,16 @@
     @apply bg-white text-slate-900 antialiased;
   }
 }
+
+@layer utilities {
+  /* Horizontal card carousels scroll natively (wheel/touch/keyboard) but hide
+     the scrollbar chrome for a cleaner look — the snap points and peeking
+     next card are the affordance, not a visible scrollbar track. */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
