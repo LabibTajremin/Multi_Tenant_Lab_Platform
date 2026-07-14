@@ -93,6 +93,7 @@ export default function SettingsForm({ tenant, settings }: { tenant: Tenant; set
         accept="image/jpeg,image/png,image/webp"
         label="Logo"
         defaultValue={tenant.logoUrl ?? ''}
+        hint="Recommended ratio: 1:1 (square) — e.g. 512×512px. PNG with a transparent background works best."
       />
 
       <FileUploadField
@@ -101,6 +102,7 @@ export default function SettingsForm({ tenant, settings }: { tenant: Tenant; set
         accept="image/jpeg,image/png,image/webp"
         label="Banner image"
         defaultValue={settings?.bannerUrl ?? ''}
+        hint="Recommended ratio: 4:1 (wide) — e.g. 1600×400px. It's cropped to fill the hero banner, so keep key content centered."
       />
 
       <fieldset>

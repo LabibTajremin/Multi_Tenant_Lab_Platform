@@ -70,7 +70,14 @@ export default async function SetupPage() {
           />
         </div>
 
-        <FileUploadField name="logoUrl" category="logo" accept="image/jpeg,image/png,image/webp" label="Logo" defaultValue={tenant.logoUrl ?? ''} />
+        <FileUploadField
+          name="logoUrl"
+          category="logo"
+          accept="image/jpeg,image/png,image/webp"
+          label="Logo"
+          defaultValue={tenant.logoUrl ?? ''}
+          hint="Recommended ratio: 1:1 (square) — e.g. 512×512px. PNG with a transparent background works best."
+        />
 
         <fieldset>
           <legend className="block text-sm font-medium text-slate-700 dark:text-slate-300">Accent color</legend>
