@@ -30,7 +30,7 @@ export default function MobileNav({ links }: { links: { href: string; label: str
       {open && (
         <nav
           id="mobile-nav-menu"
-          className="absolute inset-x-0 top-full z-20 border-t border-slate-200 bg-white px-6 py-4 shadow-sm dark:border-slate-800 dark:bg-slate-950"
+          className="absolute inset-x-0 top-full z-20 border-t border-slate-200 bg-ivory px-6 py-4 shadow-sm dark:border-slate-800 dark:bg-slate-950"
         >
           <ul className="space-y-1">
             {links.map((link) => (
@@ -38,7 +38,7 @@ export default function MobileNav({ links }: { links: { href: string; label: str
                 <Link
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="block rounded-md px-2 py-2.5 text-base font-medium text-slate-700 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
+                  className="block rounded-md px-2 py-2.5 text-base font-medium text-slate-700 hover:bg-ivory-100 dark:text-slate-300 dark:hover:bg-slate-800"
                 >
                   {link.label}
                 </Link>

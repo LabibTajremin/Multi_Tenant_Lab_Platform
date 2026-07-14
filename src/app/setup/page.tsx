@@ -3,6 +3,7 @@ import { getCurrentTenant } from '@/lib/tenantContext';
 import { getSessionUser } from '@/lib/session';
 import { ACCENT_COLORS } from '@/lib/theme';
 import FileUploadField from '@/components/admin/FileUploadField';
+import AccentColorPicker from '@/components/admin/AccentColorPicker';
 import { completeSetup } from './actions';
 
 // Reads live per-deployment DB state — never statically prerendered (see the
@@ -72,19 +73,7 @@ export default async function SetupPage() {
 
         <fieldset>
           <legend className="block text-sm font-medium text-slate-700 dark:text-slate-300">Accent color</legend>
-          <div className="mt-2 flex flex-wrap gap-3">
-            {ACCENT_COLORS.map((color, index) => (
-              <label key={color.value} className="flex cursor-pointer items-center gap-2 rounded-md border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm">
-                <input type="radio" name="primaryColor" value={color.value} defaultChecked={index === 0} className="sr-only" />
-                <span
-                  className="h-4 w-4 rounded-full border border-black/10"
-                  style={{ backgroundColor: color.swatch }}
-                  aria-hidden
-                />
-                {color.label}
-              </label>
-            ))}
-          </div>
+          <AccentColorPicker defaultValue={ACCENT_COLORS[0].value} />
         </fieldset>
 
         <input type="hidden" name="theme" value="default" />

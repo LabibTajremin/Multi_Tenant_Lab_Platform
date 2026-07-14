@@ -22,7 +22,7 @@ export default function SiteHeader({ tenant }: { tenant: Tenant }) {
     // otherwise the mobile dropdown's z-index only competes with siblings
     // inside header, and a sibling section below (e.g. the home page hero,
     // itself position:relative) can still paint on top of it.
-    <header className="relative z-30 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
+    <header className="relative z-30 border-b border-slate-200 bg-ivory/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
       <div className="mx-auto flex max-w-content items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3">
           {tenant.logoUrl ? (

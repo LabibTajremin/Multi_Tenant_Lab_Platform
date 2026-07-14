@@ -12,7 +12,7 @@ const PLATFORM_LABELS: Record<string, string> = {
 
 export default function SiteFooter({ tenant, settings }: { tenant: Tenant; settings: SiteSettings | null }) {
   return (
-    <footer className="mt-24 border-t border-slate-200 bg-slate-50 dark:border-slate-800 dark:bg-slate-900">
+    <footer className="mt-24 border-t border-slate-200 bg-ivory-100 dark:border-slate-800 dark:bg-slate-900">
       <div className="mx-auto max-w-content px-6 py-12">
         <div className="grid gap-8 sm:grid-cols-3">
           <div>

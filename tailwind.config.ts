@@ -45,6 +45,12 @@ const config: Config = {
     extend: {
       colors: {
         accent: accentPalette,
+        // Warm off-white for light-mode page backgrounds — plain white behind
+        // white cards left the whole site reading flat/cheap; this gives cards
+        // something to visibly sit on top of. Two shades so a section can still
+        // read as distinct from the page body (mirrors the old white/slate-50
+        // relationship), the same way dark mode's slate-950/900/800 layer.
+        ivory: { DEFAULT: '#faf8f3', 100: '#f2ecdf' },
       },
       fontFamily: {
         display: ['var(--font-display)', 'Georgia', 'serif'],
