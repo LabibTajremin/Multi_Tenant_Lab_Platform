@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { canChangeSiteSettings, canManageUsers, type AuthUser } from '@/lib/rbac';
+import ThemeToggle from '@/components/ThemeToggle';
 import SignOutButton from './SignOutButton';
 
 const BASE_LINKS = [
@@ -43,8 +44,9 @@ export default function AdminNav({ actor, reviewEnabled }: { actor: AuthUser; re
         <Link href="/" className="block px-2 text-sm text-slate-300 transition hover:text-white">
           View public site
         </Link>
-        <div className="px-2">
+        <div className="flex items-center justify-between px-2">
           <SignOutButton />
+          <ThemeToggle variant="sidebar" />
         </div>
       </div>
     </nav>

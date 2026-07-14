@@ -13,6 +13,17 @@ const SORT_RANK: Record<MemberPosition, number> = {
 
 export const MEMBER_POSITIONS: readonly MemberPosition[] = ['PI', 'Postdoc', 'PhD', 'MS', 'Undergrad', 'Alumnus'];
 
+/** Shared between the /people page's section headings and the home page
+ * team teaser, so both read the same human-readable label for a position. */
+export const MEMBER_POSITION_LABELS: Record<MemberPosition, string> = {
+  PI: 'Principal Investigator',
+  Postdoc: 'Postdoctoral Researcher',
+  PhD: 'PhD Student',
+  MS: 'MS Student',
+  Undergrad: 'Undergraduate Researcher',
+  Alumnus: 'Alumnus',
+};
+
 export function isMemberPosition(value: string): value is MemberPosition {
   return (MEMBER_POSITIONS as readonly string[]).includes(value);
 }

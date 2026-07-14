@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Tenant } from '@/domain/entities/Tenant';
 import { resolveAccent, accentClasses } from '@/lib/accent';
+import ThemeToggle from '@/components/ThemeToggle';
 import MobileNav from './MobileNav';
 
 const NAV_LINKS = [
@@ -21,7 +22,7 @@ export default function SiteHeader({ tenant }: { tenant: Tenant }) {
     // otherwise the mobile dropdown's z-index only competes with siblings
     // inside header, and a sibling section below (e.g. the home page hero,
     // itself position:relative) can still paint on top of it.
-    <header className="relative z-30 border-b border-slate-200 bg-white/90 backdrop-blur">
+    <header className="relative z-30 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
       <div className="mx-auto flex max-w-content items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3">
           {tenant.logoUrl ? (
@@ -32,16 +33,23 @@ export default function SiteHeader({ tenant }: { tenant: Tenant }) {
               {tenant.labName.charAt(0)}
             </span>
           )}
-          <span className="font-display text-lg font-semibold text-slate-900">{tenant.labName}</span>
+          <span className="font-display text-lg font-semibold text-slate-900 dark:text-slate-100">{tenant.labName}</span>
         </Link>
-        <nav className="hidden gap-6 md:flex">
-          {NAV_LINKS.map((link) => (
-            <Link key={link.href} href={link.href} className={`text-sm font-medium text-slate-600 transition hover:${accent.text600}`}>
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-        <MobileNav links={NAV_LINKS} />
+        <div className="flex items-center gap-2">
+          <nav className="hidden gap-6 md:flex">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`self-center text-sm font-medium text-slate-600 transition ${accent.hoverText600} dark:text-slate-400`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+          <ThemeToggle />
+          <MobileNav links={NAV_LINKS} />
+        </div>
       </div>
     </header>
   );

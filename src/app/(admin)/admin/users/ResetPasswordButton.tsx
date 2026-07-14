@@ -6,7 +6,7 @@ import { resetPasswordAction, type ResetPasswordFormState } from './actions';
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <button type="submit" disabled={pending} className="text-slate-700 hover:underline disabled:opacity-60">
+    <button type="submit" disabled={pending} className="text-slate-700 dark:text-slate-300 hover:underline disabled:opacity-60">
       {pending ? 'Resetting…' : 'Reset password'}
     </button>
   );

@@ -23,7 +23,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="rounded-md bg-slate-900 px-4 py-2.5 font-medium text-white transition hover:bg-slate-800 disabled:opacity-60"
+      className="rounded-md bg-slate-900 px-4 py-2.5 font-medium text-white transition hover:bg-slate-800 disabled:opacity-60 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-300"
     >
       {pending ? 'Saving…' : 'Save settings'}
     </button>
@@ -37,7 +37,7 @@ export default function SettingsForm({ tenant, settings }: { tenant: Tenant; set
   return (
     <form action={formAction} className="max-w-2xl space-y-6">
       <div>
-        <label htmlFor="labName" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="labName" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
           Lab name <span className="text-red-600">*</span>
         </label>
         <input
@@ -45,36 +45,36 @@ export default function SettingsForm({ tenant, settings }: { tenant: Tenant; set
           name="labName"
           required
           defaultValue={tenant.labName}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+          className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
         />
       </div>
 
       <div>
-        <label htmlFor="university" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="university" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
           University
         </label>
         <input
           id="university"
           name="university"
           defaultValue={tenant.university ?? ''}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+          className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
         />
       </div>
 
       <div>
-        <label htmlFor="tagline" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="tagline" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
           Tagline
         </label>
         <input
           id="tagline"
           name="tagline"
           defaultValue={settings?.tagline ?? ''}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+          className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
         />
       </div>
 
       <div>
-        <label htmlFor="contactEmail" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="contactEmail" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
           Public contact email
         </label>
         <input
@@ -82,7 +82,7 @@ export default function SettingsForm({ tenant, settings }: { tenant: Tenant; set
           name="contactEmail"
           type="email"
           defaultValue={settings?.contactEmail ?? ''}
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+          className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
         />
       </div>
 
@@ -103,10 +103,10 @@ export default function SettingsForm({ tenant, settings }: { tenant: Tenant; set
       />
 
       <fieldset>
-        <legend className="block text-sm font-medium text-slate-700">Accent color</legend>
+        <legend className="block text-sm font-medium text-slate-700 dark:text-slate-300">Accent color</legend>
         <div className="mt-2 flex flex-wrap gap-3">
           {ACCENT_COLORS.map((color) => (
-            <label key={color.value} className="flex cursor-pointer items-center gap-2 rounded-md border border-slate-200 px-3 py-2 text-sm">
+            <label key={color.value} className="flex cursor-pointer items-center gap-2 rounded-md border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm">
               <input
                 type="radio"
                 name="primaryColor"
@@ -122,11 +122,11 @@ export default function SettingsForm({ tenant, settings }: { tenant: Tenant; set
       </fieldset>
 
       <fieldset>
-        <legend className="block text-sm font-medium text-slate-700">Social links</legend>
+        <legend className="block text-sm font-medium text-slate-700 dark:text-slate-300">Social links</legend>
         <div className="mt-2 space-y-2">
           {LINK_PLATFORMS.map((platform) => (
             <div key={platform}>
-              <label htmlFor={`link_${platform}`} className="block text-xs font-medium text-slate-500">
+              <label htmlFor={`link_${platform}`} className="block text-xs font-medium text-slate-500 dark:text-slate-400">
                 {PLATFORM_LABELS[platform]}
               </label>
               <input
@@ -134,7 +134,7 @@ export default function SettingsForm({ tenant, settings }: { tenant: Tenant; set
                 name={`link_${platform}`}
                 type="url"
                 defaultValue={linkFor(platform)}
-                className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+                className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
               />
             </div>
           ))}

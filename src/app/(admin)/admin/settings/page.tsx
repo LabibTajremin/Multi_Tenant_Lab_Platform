@@ -19,11 +19,11 @@ export default async function SettingsPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-slate-900">Settings</h1>
+      <h1 className="font-display text-2xl font-semibold text-slate-900 dark:text-slate-100">Settings</h1>
 
-      <div className="mt-6 rounded-lg border border-slate-200 bg-white p-5">
-        <h2 className="font-medium text-slate-900">Review mode</h2>
-        <p className="mt-1 text-sm text-slate-600">
+      <div className="mt-6 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5">
+        <h2 className="font-medium text-slate-900 dark:text-slate-100">Review mode</h2>
+        <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
           When on, Editor-submitted content waits for Admin approval before it appears on the public site.
         </p>
         <div className="mt-4">

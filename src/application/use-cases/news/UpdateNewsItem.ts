@@ -34,5 +34,9 @@ export async function updateNewsItem(
   const isEditorRevisingPublished = ctx.actor!.role === 'editor' && existing.status === 'published';
   const statusPatch = isEditorRevisingPublished && ctx.reviewEnabled ? ({ status: 'pending_review' } as const) : {};
 
-  return deps.repo.update(ctx.tenantId, id, { ...parsed.data, ...statusPatch });
+  // Curating what shows on the home page is an Admin decision — silently
+  // ignore the flag if an Editor's edit happened to include it.
+  const isFeatured = ctx.actor!.role === 'admin' ? parsed.data.isFeatured : undefined;
+
+  return deps.repo.update(ctx.tenantId, id, { ...parsed.data, isFeatured, ...statusPatch });
 }

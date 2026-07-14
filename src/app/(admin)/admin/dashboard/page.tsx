@@ -30,12 +30,12 @@ export default async function DashboardPage() {
 
   return (
     <div>
-      <h1 className="font-display text-2xl font-semibold text-slate-900">Dashboard</h1>
+      <h1 className="font-display text-2xl font-semibold text-slate-900 dark:text-slate-100">Dashboard</h1>
 
       {pendingCount > 0 && (
         <Link
           href="/admin/review-queue"
-          className="mt-4 block rounded-md border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-900 transition hover:bg-amber-100"
+          className="mt-4 block rounded-md border border-amber-300 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-900 transition hover:bg-amber-100 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-200 dark:hover:bg-amber-950/60"
         >
           {pendingCount} item{pendingCount === 1 ? '' : 's'} waiting for review →
         </Link>
@@ -46,22 +46,22 @@ export default async function DashboardPage() {
           <Link
             key={stat.href}
             href={stat.href}
-            className="rounded-lg border border-slate-200 bg-white p-5 transition hover:border-slate-300 hover:shadow-sm"
+            className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 transition hover:border-slate-300 dark:hover:border-slate-500 hover:shadow-sm"
           >
-            <p className="text-3xl font-semibold text-slate-900">{stat.count}</p>
-            <p className="mt-1 text-sm text-slate-600">{stat.label}</p>
+            <p className="text-3xl font-semibold text-slate-900 dark:text-slate-100">{stat.count}</p>
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{stat.label}</p>
           </Link>
         ))}
       </div>
 
       <div className="mt-8 flex flex-wrap gap-3">
-        <Link href="/admin/publications/new" className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800">
+        <Link href="/admin/publications/new" className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-300">
           + Add publication
         </Link>
-        <Link href="/admin/news/new" className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800">
+        <Link href="/admin/news/new" className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-300">
           + Add news item
         </Link>
-        <Link href="/admin/members/new" className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800">
+        <Link href="/admin/members/new" className="rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-300">
           + Add member
         </Link>
       </div>

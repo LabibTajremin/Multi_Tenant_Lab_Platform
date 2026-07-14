@@ -22,29 +22,29 @@ export default async function PublicationsPage({
 
   return (
     <main className="mx-auto max-w-content px-6 py-16">
-      <h1 className="font-display text-3xl font-semibold text-slate-900">Publications</h1>
+      <h1 className="font-display text-3xl font-semibold text-slate-900 dark:text-slate-100">Publications</h1>
 
       <form method="get" className="mt-8 flex flex-wrap items-end gap-4">
         <div>
-          <label htmlFor="q" className="block text-xs font-medium text-slate-600">
+          <label htmlFor="q" className="block text-xs font-medium text-slate-600 dark:text-slate-400">
             Search by title or author
           </label>
           <input
             id="q"
             name="q"
             defaultValue={searchParams.q ?? ''}
-            className="mt-1 w-64 rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+            className="mt-1 w-64 rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
           />
         </div>
         <div>
-          <label htmlFor="year" className="block text-xs font-medium text-slate-600">
+          <label htmlFor="year" className="block text-xs font-medium text-slate-600 dark:text-slate-400">
             Year
           </label>
           <select
             id="year"
             name="year"
             defaultValue={searchParams.year ?? ''}
-            className="mt-1 rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+            className="mt-1 rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
           >
             <option value="">All years</option>
             {years.map((y) => (
@@ -55,14 +55,14 @@ export default async function PublicationsPage({
           </select>
         </div>
         <div>
-          <label htmlFor="sort" className="block text-xs font-medium text-slate-600">
+          <label htmlFor="sort" className="block text-xs font-medium text-slate-600 dark:text-slate-400">
             Sort
           </label>
           <select
             id="sort"
             name="sort"
             defaultValue={sort}
-            className="mt-1 rounded-md border border-slate-300 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+            className="mt-1 rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
           >
             <option value="year_desc">Newest first</option>
             <option value="year_asc">Oldest first</option>
@@ -73,11 +73,11 @@ export default async function PublicationsPage({
         </button>
       </form>
 
-      <ul className="mt-8 divide-y divide-slate-200">
+      <ul className="mt-8 divide-y divide-slate-200 dark:divide-slate-700">
         {publications.map((pub) => (
           <li key={pub.id} className="py-5">
-            <p className="font-medium text-slate-900">{pub.title}</p>
-            <p className="mt-1 text-sm text-slate-600">
+            <p className="font-medium text-slate-900 dark:text-slate-100">{pub.title}</p>
+            <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
               {pub.authors} — {pub.venue ? `${pub.venue}, ` : ''}
               {pub.year}
             </p>
@@ -95,7 +95,7 @@ export default async function PublicationsPage({
             </div>
           </li>
         ))}
-        {publications.length === 0 && <p className="py-8 text-center text-slate-500">No publications match.</p>}
+        {publications.length === 0 && <p className="py-8 text-center text-slate-500 dark:text-slate-400">No publications match.</p>}
       </ul>
     </main>
   );

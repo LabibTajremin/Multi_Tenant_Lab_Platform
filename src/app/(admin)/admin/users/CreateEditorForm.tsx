@@ -9,7 +9,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="rounded-md bg-slate-900 px-4 py-2.5 font-medium text-white transition hover:bg-slate-800 disabled:opacity-60"
+      className="rounded-md bg-slate-900 px-4 py-2.5 font-medium text-white transition hover:bg-slate-800 disabled:opacity-60 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-300"
     >
       {pending ? 'Creating…' : 'Create Editor account'}
     </button>
@@ -28,7 +28,7 @@ export default function CreateEditorForm() {
         <p className="mt-2">
           Temporary password (shown once — share it securely, it is not stored in plaintext):
         </p>
-        <code className="mt-1 block rounded bg-white px-3 py-2 font-mono">{state.temporaryPassword}</code>
+        <code className="mt-1 block rounded bg-white dark:bg-slate-900 px-3 py-2 font-mono">{state.temporaryPassword}</code>
       </div>
     );
   }
@@ -36,18 +36,18 @@ export default function CreateEditorForm() {
   return (
     <form action={formAction} className="max-w-md space-y-4">
       <div>
-        <label htmlFor="displayName" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="displayName" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
           Display name <span className="text-red-600">*</span>
         </label>
         <input
           id="displayName"
           name="displayName"
           required
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+          className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
         />
       </div>
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-slate-700">
+        <label htmlFor="email" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
           Email <span className="text-red-600">*</span>
         </label>
         <input
@@ -55,7 +55,7 @@ export default function CreateEditorForm() {
           name="email"
           type="email"
           required
-          className="mt-1 block w-full rounded-md border border-slate-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500"
+          className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
         />
       </div>
 

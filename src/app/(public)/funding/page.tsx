@@ -7,21 +7,21 @@ export default async function FundingPage() {
 
   return (
     <main className="mx-auto max-w-content px-6 py-16">
-      <h1 className="font-display text-3xl font-semibold text-slate-900">Funding</h1>
-      <p className="mt-2 max-w-prose text-slate-600">We gratefully acknowledge support from the following sources.</p>
+      <h1 className="font-display text-3xl font-semibold text-slate-900 dark:text-slate-100">Funding</h1>
+      <p className="mt-2 max-w-prose text-slate-600 dark:text-slate-400">We gratefully acknowledge support from the following sources.</p>
 
       <ul className="mt-8 grid gap-6 sm:grid-cols-2">
         {posts.map((post) => (
-          <li key={post.id} className="rounded-lg border border-slate-200 p-5">
+          <li key={post.id} className="rounded-lg border border-slate-200 dark:border-slate-700 p-5">
             {post.imageUrl && (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={post.imageUrl} alt={post.imageAlt ?? ''} className="mb-4 h-16 object-contain" />
             )}
-            <p className="font-medium text-slate-900">{post.title}</p>
-            {post.body && <p className="mt-2 text-sm text-slate-600">{post.body}</p>}
+            <p className="font-medium text-slate-900 dark:text-slate-100">{post.title}</p>
+            {post.body && <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">{post.body}</p>}
           </li>
         ))}
-        {posts.length === 0 && <p className="text-slate-500">No funding acknowledgements yet.</p>}
+        {posts.length === 0 && <p className="text-slate-500 dark:text-slate-400">No funding acknowledgements yet.</p>}
       </ul>
     </main>
   );

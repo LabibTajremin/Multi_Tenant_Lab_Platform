@@ -19,6 +19,7 @@ function parseInput(formData: FormData) {
     year: Number.isFinite(year) ? year : undefined,
     doiOrLink: String(formData.get('doiOrLink') ?? '') || undefined,
     pdfUrl: String(formData.get('pdfUrl') ?? '') || undefined,
+    isFeatured: formData.get('isFeatured') === 'on',
   };
 }
 

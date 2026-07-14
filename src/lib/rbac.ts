@@ -49,6 +49,11 @@ export function canApproveContent(user: AuthUser | null): boolean {
   return isNonNull(user) && user.role === 'admin';
 }
 
+/** Curating what shows in the home page carousels is an Admin decision. */
+export function canFeatureContent(user: AuthUser | null): boolean {
+  return isNonNull(user) && user.role === 'admin';
+}
+
 /** Both Admin and Editor can add publications/news/posts (subject to review mode). */
 export function canCreateContent(user: AuthUser | null): boolean {
   return isNonNull(user) && (user.role === 'admin' || user.role === 'editor');

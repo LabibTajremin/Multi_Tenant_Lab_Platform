@@ -10,6 +10,7 @@ export interface NewPublicationInput {
   doiOrLink?: string | null;
   pdfUrl?: string | null;
   status: ContentStatus;
+  isFeatured?: boolean;
   createdBy: string;
 }
 
@@ -23,6 +24,7 @@ export interface PublicationPatch {
   status?: ContentStatus;
   reviewNote?: string | null;
   reviewedBy?: string | null;
+  isFeatured?: boolean;
 }
 
 export interface PublishedPublicationQuery {
@@ -35,6 +37,9 @@ export interface IPublicationRepository {
   findById(tenantId: string, id: string): Promise<Publication | null>;
   /** Enforces `status = 'published'` in the query itself (Section 7) — never trust the UI alone. */
   listPublished(tenantId: string, query?: PublishedPublicationQuery): Promise<Publication[]>;
+  /** Published + is_featured = true, for the home page carousel. Callers fall
+   * back to listPublished() themselves when this returns fewer than they need. */
+  listFeatured(tenantId: string, limit: number): Promise<Publication[]>;
   listAll(tenantId: string): Promise<Publication[]>;
   listPending(tenantId: string): Promise<Publication[]>;
   create(input: NewPublicationInput): Promise<Publication>;

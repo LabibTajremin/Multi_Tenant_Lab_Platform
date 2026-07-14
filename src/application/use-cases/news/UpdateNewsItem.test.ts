@@ -74,4 +74,27 @@ describe('updateNewsItem', () => {
 
     expect(repo.findById).toHaveBeenCalledWith('tenant-xyz', existing.id);
   });
+
+  it('home-page curation: Admin can feature/unfeature a news item', async () => {
+    const repo = mock<INewsRepository>();
+    const existing = makeNewsItem({ tenantId: 'tenant-1', createdBy: admin.id });
+    repo.findById.mockResolvedValue(existing);
+    repo.update.mockResolvedValue(existing);
+
+    await updateNewsItem(existing.id, { isFeatured: true }, ctx({ actor: admin }), { repo });
+
+    expect(repo.update).toHaveBeenCalledWith('tenant-1', existing.id, expect.objectContaining({ isFeatured: true }));
+  });
+
+  it('home-page curation: an Editor cannot feature their own news item — the flag is silently ignored', async () => {
+    const repo = mock<INewsRepository>();
+    const existing = makeNewsItem({ tenantId: 'tenant-1', createdBy: editor.id, status: 'draft' });
+    repo.findById.mockResolvedValue(existing);
+    repo.update.mockResolvedValue(existing);
+
+    await updateNewsItem(existing.id, { isFeatured: true }, ctx({ actor: editor }), { repo });
+
+    const patch = repo.update.mock.calls[0]?.[2];
+    expect(patch?.isFeatured).toBeUndefined();
+  });
 });

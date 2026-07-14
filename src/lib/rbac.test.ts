@@ -6,6 +6,7 @@ import {
   canDeleteContent,
   canEditContent,
   canEditMemberProfile,
+  canFeatureContent,
   canManageMembers,
   canManageUsers,
   canToggleReviewMode,
@@ -22,7 +23,14 @@ const publicVisitor = null;
 const STATUSES: ContentStatus[] = ['draft', 'pending_review', 'published', 'rejected'];
 
 describe('admin-only capabilities', () => {
-  const adminOnlyFns = [canManageUsers, canToggleReviewMode, canChangeSiteSettings, canApproveContent, canManageMembers];
+  const adminOnlyFns = [
+    canManageUsers,
+    canToggleReviewMode,
+    canChangeSiteSettings,
+    canApproveContent,
+    canManageMembers,
+    canFeatureContent,
+  ];
 
   it.each(adminOnlyFns)('%p is true for admin, false for editor, false for public', (fn) => {
     expect(fn(admin)).toBe(true);

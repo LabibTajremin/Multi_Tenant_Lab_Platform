@@ -17,21 +17,21 @@ export default async function ContactPage() {
 
   return (
     <main className="mx-auto max-w-content px-6 py-16">
-      <h1 className="font-display text-3xl font-semibold text-slate-900">Contact</h1>
+      <h1 className="font-display text-3xl font-semibold text-slate-900 dark:text-slate-100">Contact</h1>
 
       <div className="mt-8 max-w-md space-y-4">
-        {tenant.university && <p className="text-slate-700">{tenant.university}</p>}
+        {tenant.university && <p className="text-slate-700 dark:text-slate-300">{tenant.university}</p>}
         {settings?.contactEmail ? (
           <a href={`mailto:${settings.contactEmail}`} className={`block text-lg font-medium ${accent.text600} hover:underline`}>
             {settings.contactEmail}
           </a>
         ) : (
-          <p className="text-slate-500">No contact email listed yet.</p>
+          <p className="text-slate-500 dark:text-slate-400">No contact email listed yet.</p>
         )}
 
         {(settings?.socialLinks.length ?? 0) > 0 && (
           <div>
-            <p className="text-sm font-medium text-slate-900">Find us online</p>
+            <p className="text-sm font-medium text-slate-900 dark:text-slate-100">Find us online</p>
             <ul className="mt-2 space-y-1">
               {settings!.socialLinks.map((link) => (
                 <li key={link.platform}>
