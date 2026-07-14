@@ -4,6 +4,7 @@ import { getSessionUser } from '@/lib/session';
 import { ACCENT_COLORS } from '@/lib/theme';
 import FileUploadField from '@/components/admin/FileUploadField';
 import AccentColorPicker from '@/components/admin/AccentColorPicker';
+import BackgroundPatternPicker from '@/components/admin/BackgroundPatternPicker';
 import { completeSetup } from './actions';
 
 // Reads live per-deployment DB state — never statically prerendered (see the
@@ -74,6 +75,11 @@ export default async function SetupPage() {
         <fieldset>
           <legend className="block text-sm font-medium text-slate-700 dark:text-slate-300">Accent color</legend>
           <AccentColorPicker defaultValue={ACCENT_COLORS[0].value} />
+        </fieldset>
+
+        <fieldset>
+          <legend className="block text-sm font-medium text-slate-700 dark:text-slate-300">Background pattern</legend>
+          <BackgroundPatternPicker defaultValue="dots" />
         </fieldset>
 
         <input type="hidden" name="theme" value="default" />

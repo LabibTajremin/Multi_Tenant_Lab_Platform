@@ -25,6 +25,7 @@ export async function updateSettingsAction(_prevState: FormState, formData: Form
     const labName = String(formData.get('labName') ?? '').trim();
     const university = String(formData.get('university') ?? '').trim();
     const primaryColor = String(formData.get('primaryColor') ?? '');
+    const backgroundPattern = String(formData.get('backgroundPattern') ?? '');
     const logoUrl = String(formData.get('logoUrl') ?? '').trim();
 
     if (labName) {
@@ -32,6 +33,7 @@ export async function updateSettingsAction(_prevState: FormState, formData: Form
         labName,
         university: university || null,
         primaryColor: primaryColor || null,
+        backgroundPattern: backgroundPattern || undefined,
         logoUrl: logoUrl || null,
       });
     }

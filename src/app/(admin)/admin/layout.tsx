@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { getSessionUser } from '@/lib/session';
 import { getCurrentTenant } from '@/lib/tenantContext';
+import { backgroundPatternClass } from '@/lib/backgroundPattern';
 import AdminNav from '@/components/admin/AdminNav';
 
 // Reads live session + per-deployment DB state — never statically prerendered.
@@ -22,7 +23,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       <div className="w-64 shrink-0">
         <AdminNav actor={user} reviewEnabled={tenant.reviewEnabled} />
       </div>
-      <div className="bg-pattern flex-1 px-8 py-8">{children}</div>
+      <div className={`bg-surface ${backgroundPatternClass(tenant.backgroundPattern)} flex-1 px-8 py-8`}>{children}</div>
     </div>
   );
 }

@@ -10,6 +10,7 @@ interface TenantRow {
   logo_url: string | null;
   theme: string;
   primary_color: string | null;
+  background_pattern: string;
   custom_domain: string | null;
   review_enabled: boolean;
   created_at: Date;
@@ -24,6 +25,7 @@ function toEntity(row: TenantRow): Tenant {
     logoUrl: row.logo_url,
     theme: row.theme,
     primaryColor: row.primary_color,
+    backgroundPattern: row.background_pattern,
     customDomain: row.custom_domain,
     reviewEnabled: row.review_enabled,
     createdAt: row.created_at,
@@ -47,10 +49,17 @@ export class PostgresTenantRepository implements ITenantRepository {
 
   async create(input: NewTenantInput): Promise<Tenant> {
     const result = await getPool().query<TenantRow>(
-      `INSERT INTO tenants (slug, lab_name, university, theme, primary_color)
-       VALUES ($1, $2, $3, $4, $5)
+      `INSERT INTO tenants (slug, lab_name, university, theme, primary_color, background_pattern)
+       VALUES ($1, $2, $3, $4, $5, COALESCE($6, 'dots'))
        RETURNING *`,
-      [input.slug, input.labName, input.university ?? null, input.theme ?? 'default', input.primaryColor ?? null],
+      [
+        input.slug,
+        input.labName,
+        input.university ?? null,
+        input.theme ?? 'default',
+        input.primaryColor ?? null,
+        input.backgroundPattern ?? null,
+      ],
     );
     const row = result.rows[0];
     if (!row) {
@@ -67,10 +76,20 @@ export class PostgresTenantRepository implements ITenantRepository {
          logo_url = COALESCE($4, logo_url),
          theme = COALESCE($5, theme),
          primary_color = COALESCE($6, primary_color),
-         custom_domain = COALESCE($7, custom_domain)
+         custom_domain = COALESCE($7, custom_domain),
+         background_pattern = COALESCE($8, background_pattern)
        WHERE id = $1
        RETURNING *`,
-      [id, patch.labName, patch.university, patch.logoUrl, patch.theme, patch.primaryColor, patch.customDomain],
+      [
+        id,
+        patch.labName,
+        patch.university,
+        patch.logoUrl,
+        patch.theme,
+        patch.primaryColor,
+        patch.customDomain,
+        patch.backgroundPattern,
+      ],
     );
     const row = result.rows[0];
     if (!row) {
