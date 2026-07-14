@@ -76,7 +76,7 @@ export default async function SetupPage() {
           accept="image/jpeg,image/png,image/webp"
           label="Logo"
           defaultValue={tenant.logoUrl ?? ''}
-          hint="Recommended: 512×512px, square (1:1). PNG with a transparent background works best."
+          hint="Recommended ratio: 1:1 (square) — e.g. 512×512px. PNG with a transparent background works best."
         />
 
         <fieldset>
