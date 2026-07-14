@@ -14,12 +14,14 @@ export default function FileUploadField({
   defaultValue,
   accept,
   label,
+  hint,
 }: {
   name: string;
   category: 'photo' | 'banner' | 'logo' | 'pdf' | 'image';
   defaultValue?: string;
   accept: string;
   label: string;
+  hint?: string;
 }) {
   const [url, setUrl] = useState(defaultValue ?? '');
   const [uploading, setUploading] = useState(false);
@@ -73,6 +75,7 @@ export default function FileUploadField({
           <input ref={fileInputRef} type="file" accept={accept} onChange={handleFileChange} disabled={uploading} className="sr-only" />
         </label>
       </div>
+      {hint && <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{hint}</p>}
       {error && <p className="mt-1 text-xs text-red-600">{error}</p>}
       {url && (
         // eslint-disable-next-line @next/next/no-img-element
