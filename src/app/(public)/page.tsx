@@ -82,7 +82,7 @@ export default async function HomePage() {
             {latestNews.map((item) => (
               <article
                 key={item.id}
-                className="w-72 shrink-0 snap-start rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md sm:w-80"
+                className={`w-72 shrink-0 snap-start rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl dark:hover:bg-slate-700 dark:hover:shadow-2xl dark:hover:shadow-black/40 ${accent.hoverBorder300} sm:w-80`}
               >
                 {item.imageUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -124,7 +124,7 @@ export default async function HomePage() {
               {latestPublications.map((pub) => (
                 <article
                   key={pub.id}
-                  className="flex w-72 shrink-0 snap-start flex-col rounded-xl bg-white dark:bg-slate-900 p-5 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 transition hover:-translate-y-0.5 hover:shadow-md sm:w-80"
+                  className={`flex w-72 shrink-0 snap-start flex-col rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl dark:hover:bg-slate-700 dark:hover:shadow-2xl dark:hover:shadow-black/40 ${accent.hoverBorder300} sm:w-80`}
                 >
                   <p className={`text-xs font-semibold ${accent.text600}`}>{pub.year}</p>
                   <h3 className="mt-2 font-display text-base font-semibold leading-snug text-slate-900 dark:text-slate-100 line-clamp-3">
@@ -164,7 +164,7 @@ export default async function HomePage() {
               <Link
                 key={member.id}
                 href="/people"
-                className="w-48 shrink-0 snap-start overflow-hidden rounded-xl bg-white dark:bg-slate-900 shadow-sm ring-1 ring-slate-200 dark:ring-slate-700 transition hover:-translate-y-0.5 hover:shadow-md sm:w-56"
+                className={`group w-48 shrink-0 snap-start overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl dark:hover:bg-slate-700 dark:hover:shadow-2xl dark:hover:shadow-black/40 ${accent.hoverBorder300} sm:w-56`}
               >
                 <div className={`aspect-square w-full overflow-hidden ${accent.bg100}`}>
                   {member.photoUrl ? (
@@ -172,7 +172,7 @@ export default async function HomePage() {
                     <img
                       src={member.photoUrl}
                       alt={member.photoAlt ?? member.fullName}
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-cover transition-transform duration-200 ease-out group-hover:scale-105"
                     />
                   ) : (
                     <div className={`flex h-full w-full items-center justify-center font-display text-4xl ${accent.text600}`}>

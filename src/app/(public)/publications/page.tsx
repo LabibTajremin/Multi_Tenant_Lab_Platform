@@ -75,7 +75,10 @@ export default async function PublicationsPage({
 
       <ul className="mt-8 divide-y divide-slate-200 dark:divide-slate-700">
         {publications.map((pub) => (
-          <li key={pub.id} className="py-5">
+          <li
+            key={pub.id}
+            className="-mx-4 rounded-lg px-4 py-5 transition-colors duration-200 ease-out hover:bg-slate-50 dark:hover:bg-slate-800/60"
+          >
             <p className="font-medium text-slate-900 dark:text-slate-100">{pub.title}</p>
             <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
               {pub.authors} — {pub.venue ? `${pub.venue}, ` : ''}

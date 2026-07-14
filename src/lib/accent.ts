@@ -28,6 +28,7 @@ export function accentClasses(accent: AccentColor) {
     text600: `text-accent-${accent}-600 dark:text-accent-${accent}-300`,
     text700: `text-accent-${accent}-700 dark:text-accent-${accent}-300`,
     border300: `border-accent-${accent}-300 dark:border-accent-${accent}-500`,
+    hoverBorder300: `hover:border-accent-${accent}-300 dark:hover:border-accent-${accent}-500`,
     ring500: `ring-accent-${accent}-500`,
     focusRing500: `focus:ring-accent-${accent}-500`,
     focusBorder500: `focus:border-accent-${accent}-500`,
