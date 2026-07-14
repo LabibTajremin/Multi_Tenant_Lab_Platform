@@ -7,6 +7,7 @@ import { LINK_PLATFORMS } from '@/domain/value-objects/LinkPlatform';
 import { initialFormState, type FormState } from '@/lib/formState';
 import FileUploadField from '@/components/admin/FileUploadField';
 import AccentColorPicker from '@/components/admin/AccentColorPicker';
+import BackgroundPatternPicker from '@/components/admin/BackgroundPatternPicker';
 import { updateSettingsAction } from './actions';
 
 const PLATFORM_LABELS: Record<string, string> = {
@@ -105,6 +106,14 @@ export default function SettingsForm({ tenant, settings }: { tenant: Tenant; set
       <fieldset>
         <legend className="block text-sm font-medium text-slate-700 dark:text-slate-300">Accent color</legend>
         <AccentColorPicker defaultValue={tenant.primaryColor ?? undefined} />
+      </fieldset>
+
+      <fieldset>
+        <legend className="block text-sm font-medium text-slate-700 dark:text-slate-300">Background pattern</legend>
+        <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+          A subtle texture applied across both the admin and public site.
+        </p>
+        <BackgroundPatternPicker defaultValue={tenant.backgroundPattern} />
       </fieldset>
 
       <fieldset>

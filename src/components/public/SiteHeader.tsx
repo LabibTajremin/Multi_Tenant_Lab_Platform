@@ -14,7 +14,7 @@ const NAV_LINKS = [
   { href: '/contact', label: 'Contact' },
 ];
 
-export default function SiteHeader({ tenant }: { tenant: Tenant }) {
+export default function SiteHeader({ tenant, isLoggedIn = false }: { tenant: Tenant; isLoggedIn?: boolean }) {
   const accent = accentClasses(resolveAccent(tenant.primaryColor));
 
   return (
@@ -49,9 +49,9 @@ export default function SiteHeader({ tenant }: { tenant: Tenant }) {
           </nav>
           <ThemeToggle />
           <Link
-            href="/login"
-            aria-label="Admin login"
-            title="Admin login"
+            href={isLoggedIn ? '/admin/dashboard' : '/login'}
+            aria-label={isLoggedIn ? 'Go to dashboard' : 'Admin login'}
+            title={isLoggedIn ? 'Go to dashboard' : 'Admin login'}
             className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-slate-700 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2}>

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { isTenantProvisioned } from '@/lib/setupStatus';
 import { getCurrentTenant } from '@/lib/tenantContext';
+import { getSessionUser } from '@/lib/session';
 import { PostgresSiteSettingsRepository } from '@/infrastructure/repositories/PostgresSiteSettingsRepository';
 import SiteHeader from '@/components/public/SiteHeader';
 import SiteFooter from '@/components/public/SiteFooter';
@@ -18,11 +19,14 @@ export default async function PublicLayout({ children }: { children: React.React
   }
 
   const tenant = await getCurrentTenant();
-  const settings = await new PostgresSiteSettingsRepository().getByTenant(tenant.id);
+  const [settings, sessionUser] = await Promise.all([
+    new PostgresSiteSettingsRepository().getByTenant(tenant.id),
+    getSessionUser(),
+  ]);
 
   return (
     <div className="flex min-h-screen flex-col">
-      <SiteHeader tenant={tenant} />
+      <SiteHeader tenant={tenant} isLoggedIn={Boolean(sessionUser)} />
       <div className="flex-1">{children}</div>
       <SiteFooter tenant={tenant} settings={settings} />
     </div>

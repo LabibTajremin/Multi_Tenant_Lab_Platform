@@ -6,6 +6,7 @@ export interface Tenant {
   logoUrl: string | null;
   theme: string;
   primaryColor: string | null;
+  backgroundPattern: string;
   customDomain: string | null;
   reviewEnabled: boolean;
   createdAt: Date;

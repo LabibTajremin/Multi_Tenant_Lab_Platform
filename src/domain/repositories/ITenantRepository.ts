@@ -6,6 +6,7 @@ export interface NewTenantInput {
   university?: string | null;
   theme?: string;
   primaryColor?: string | null;
+  backgroundPattern?: string;
 }
 
 export interface TenantPatch {
@@ -14,6 +15,7 @@ export interface TenantPatch {
   logoUrl?: string | null;
   theme?: string;
   primaryColor?: string | null;
+  backgroundPattern?: string;
   customDomain?: string | null;
 }
 

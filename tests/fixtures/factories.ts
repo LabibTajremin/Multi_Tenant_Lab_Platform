@@ -30,6 +30,7 @@ export function makeTenant(overrides: Partial<Tenant> = {}): Tenant {
     logoUrl: null,
     theme: 'default',
     primaryColor: 'ocean',
+    backgroundPattern: 'dots',
     customDomain: null,
     reviewEnabled: false,
     createdAt: new Date('2025-01-01T00:00:00Z'),
