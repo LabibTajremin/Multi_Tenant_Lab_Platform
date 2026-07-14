@@ -3,10 +3,10 @@
 import { useFormState, useFormStatus } from 'react-dom';
 import type { Tenant } from '@/domain/entities/Tenant';
 import type { SiteSettings } from '@/domain/entities/SiteSettings';
-import { ACCENT_COLORS } from '@/lib/theme';
 import { LINK_PLATFORMS } from '@/domain/value-objects/LinkPlatform';
 import { initialFormState, type FormState } from '@/lib/formState';
 import FileUploadField from '@/components/admin/FileUploadField';
+import AccentColorPicker from '@/components/admin/AccentColorPicker';
 import { updateSettingsAction } from './actions';
 
 const PLATFORM_LABELS: Record<string, string> = {
@@ -104,21 +104,7 @@ export default function SettingsForm({ tenant, settings }: { tenant: Tenant; set
 
       <fieldset>
         <legend className="block text-sm font-medium text-slate-700 dark:text-slate-300">Accent color</legend>
-        <div className="mt-2 flex flex-wrap gap-3">
-          {ACCENT_COLORS.map((color) => (
-            <label key={color.value} className="flex cursor-pointer items-center gap-2 rounded-md border border-slate-200 dark:border-slate-700 px-3 py-2 text-sm">
-              <input
-                type="radio"
-                name="primaryColor"
-                value={color.value}
-                defaultChecked={tenant.primaryColor === color.value}
-                className="sr-only"
-              />
-              <span className="h-4 w-4 rounded-full border border-black/10" style={{ backgroundColor: color.swatch }} aria-hidden />
-              {color.label}
-            </label>
-          ))}
-        </div>
+        <AccentColorPicker defaultValue={tenant.primaryColor ?? undefined} />
       </fieldset>
 
       <fieldset>
