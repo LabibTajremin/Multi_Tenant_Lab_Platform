@@ -53,7 +53,7 @@
 }
 
 .bg-pattern-dots {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='2' cy='2' r='1.2' fill='%230f172a' fill-opacity='0.12'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='2' cy='2' r='1.2' fill='%230f172a' fill-opacity='0.075'/%3E%3C/svg%3E");
   background-size: 28px 28px;
 }
 :root.dark .bg-pattern-dots {
@@ -61,7 +61,7 @@
 }
 
 .bg-pattern-grid {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M0 .5H32M.5 0V32' fill='none' stroke='%230f172a' stroke-opacity='0.12'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M0 .5H32M.5 0V32' fill='none' stroke='%230f172a' stroke-opacity='0.075'/%3E%3C/svg%3E");
   background-size: 32px 32px;
 }
 :root.dark .bg-pattern-grid {
@@ -69,14 +69,14 @@
 }
 
 .bg-pattern-diagonal {
-  background-image: repeating-linear-gradient(45deg, rgba(15, 23, 42, 0.12) 0, rgba(15, 23, 42, 0.12) 1px, transparent 1px, transparent 14px);
+  background-image: repeating-linear-gradient(45deg, rgba(15, 23, 42, 0.075) 0, rgba(15, 23, 42, 0.075) 1px, transparent 1px, transparent 14px);
 }
 :root.dark .bg-pattern-diagonal {
   background-image: repeating-linear-gradient(45deg, rgba(226, 232, 240, 0.1) 0, rgba(226, 232, 240, 0.1) 1px, transparent 1px, transparent 14px);
 }
 
 .bg-pattern-cross {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cpath d='M13 10v6M10 13h6' fill='none' stroke='%230f172a' stroke-opacity='0.13' stroke-width='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Cpath d='M13 10v6M10 13h6' fill='none' stroke='%230f172a' stroke-opacity='0.085' stroke-width='1'/%3E%3C/svg%3E");
   background-size: 26px 26px;
 }
 :root.dark .bg-pattern-cross {
@@ -84,7 +84,7 @@
 }
 
 .bg-pattern-hexagons {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='46' viewBox='0 0 40 46'%3E%3Cpath d='M20 1l17 10v20l-17 10L3 31V11z' fill='none' stroke='%230f172a' stroke-opacity='0.12' stroke-width='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='46' viewBox='0 0 40 46'%3E%3Cpath d='M20 1l17 10v20l-17 10L3 31V11z' fill='none' stroke='%230f172a' stroke-opacity='0.075' stroke-width='1'/%3E%3C/svg%3E");
   background-size: 40px 46px;
 }
 :root.dark .bg-pattern-hexagons {
@@ -92,7 +92,7 @@
 }
 
 .bg-pattern-triangles {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='26' viewBox='0 0 30 26'%3E%3Cpath d='M15 2l13 22H2z' fill='none' stroke='%230f172a' stroke-opacity='0.12' stroke-width='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='26' viewBox='0 0 30 26'%3E%3Cpath d='M15 2l13 22H2z' fill='none' stroke='%230f172a' stroke-opacity='0.075' stroke-width='1'/%3E%3C/svg%3E");
   background-size: 30px 26px;
 }
 :root.dark .bg-pattern-triangles {
@@ -100,7 +100,7 @@
 }
 
 .bg-pattern-waves {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='16' viewBox='0 0 40 16'%3E%3Cpath d='M0 8c5-6 15-6 20 0s15 6 20 0' fill='none' stroke='%230f172a' stroke-opacity='0.12' stroke-width='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='16' viewBox='0 0 40 16'%3E%3Cpath d='M0 8c5-6 15-6 20 0s15 6 20 0' fill='none' stroke='%230f172a' stroke-opacity='0.075' stroke-width='1'/%3E%3C/svg%3E");
   background-size: 40px 16px;
 }
 :root.dark .bg-pattern-waves {
@@ -108,7 +108,7 @@
 }
 
 .bg-pattern-rings {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Ccircle cx='18' cy='18' r='9' fill='none' stroke='%230f172a' stroke-opacity='0.12' stroke-width='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Ccircle cx='18' cy='18' r='9' fill='none' stroke='%230f172a' stroke-opacity='0.075' stroke-width='1'/%3E%3C/svg%3E");
   background-size: 36px 36px;
 }
 :root.dark .bg-pattern-rings {
