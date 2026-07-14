@@ -25,9 +25,9 @@ export default async function MembersListPage() {
         )}
       </div>
 
-      <div className="mt-6 overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900">
+      <div className="mt-6 overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 shadow-md">
         <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-700 text-sm">
-          <thead className="bg-slate-50 dark:bg-slate-800/50 text-left text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
+          <thead className="bg-slate-100 dark:bg-slate-800 text-left text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
             <tr>
               <th className="px-4 py-3">Name</th>
               <th className="px-4 py-3">Position</th>

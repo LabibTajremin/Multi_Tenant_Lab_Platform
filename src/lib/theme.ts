@@ -8,6 +8,9 @@ export const ACCENT_COLORS = [
   { value: 'amber', label: 'Amber', swatch: '#a9711b' },
   { value: 'violet', label: 'Violet', swatch: '#5f3e9e' },
   { value: 'slate', label: 'Slate', swatch: '#3d5468' },
+  { value: 'emerald', label: 'Emerald', swatch: '#0f9d68' },
+  { value: 'sapphire', label: 'Sapphire', swatch: '#2c53a8' },
+  { value: 'burgundy', label: 'Burgundy', swatch: '#7d2847' },
 ] as const;
 
 export type AccentColor = (typeof ACCENT_COLORS)[number]['value'];

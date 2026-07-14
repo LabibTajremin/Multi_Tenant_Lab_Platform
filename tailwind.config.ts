@@ -9,6 +9,9 @@ const accentPalette = {
   amber: { 50: '#fbf4e8', 100: '#f3e2c1', 300: '#dfb15e', 500: '#a9711b', 600: '#8b5c16', 700: '#69440f' },
   violet: { 50: '#f1eefa', 100: '#ded6f2', 300: '#a893d9', 500: '#5f3e9e', 600: '#4d3282', 700: '#3a2662' },
   slate: { 50: '#eef1f4', 100: '#d6dde3', 300: '#8fa1b0', 500: '#3d5468', 600: '#324555', 700: '#263441' },
+  emerald: { 50: '#e9f8f1', 100: '#c8eede', 300: '#5ecda0', 500: '#0f9d68', 600: '#0c7f54', 700: '#095f3f' },
+  sapphire: { 50: '#eef2fb', 100: '#d6e0f5', 300: '#7d9be0', 500: '#2c53a8', 600: '#234389', 700: '#1a3268' },
+  burgundy: { 50: '#f8eef1', 100: '#edd6dd', 300: '#c98ba0', 500: '#7d2847', 600: '#652038', 700: '#4c182a' },
 };
 
 const ACCENT_NAMES = Object.keys(accentPalette);
@@ -45,12 +48,14 @@ const config: Config = {
     extend: {
       colors: {
         accent: accentPalette,
-        // Warm off-white for light-mode page backgrounds — plain white behind
-        // white cards left the whole site reading flat/cheap; this gives cards
-        // something to visibly sit on top of. Two shades so a section can still
-        // read as distinct from the page body (mirrors the old white/slate-50
-        // relationship), the same way dark mode's slate-950/900/800 layer.
-        ivory: { DEFAULT: '#faf8f3', 100: '#f2ecdf' },
+        // Barely-warm off-white for light-mode page backgrounds — plain white
+        // behind white cards left the whole site reading flat/cheap; this gives
+        // cards something to visibly sit on top of. Kept close to neutral gray
+        // (low saturation) rather than a true cream/ivory, which read as too
+        // yellow against the rest of the palette. Two shades so a section can
+        // still read as distinct from the page body (mirrors the old white/
+        // slate-50 relationship), the same way dark mode layers slate-950/900/800.
+        ivory: { DEFAULT: '#f8f7f5', 100: '#efece6' },
       },
       fontFamily: {
         display: ['var(--font-display)', 'Georgia', 'serif'],

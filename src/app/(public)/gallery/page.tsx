@@ -14,7 +14,7 @@ export default async function GalleryPage() {
           post.imageUrl ? (
             <figure
               key={post.id}
-              className="group overflow-hidden rounded-lg shadow-sm transition-shadow duration-200 ease-out hover:shadow-xl dark:hover:shadow-2xl dark:hover:shadow-black/40"
+              className="group overflow-hidden rounded-lg shadow-md transition-shadow duration-200 ease-out hover:shadow-xl dark:hover:shadow-2xl dark:hover:shadow-black/40"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
