@@ -37,6 +37,8 @@ const config: Config = {
       `dark:text-accent-${name}-${shade}`,
       `dark:border-accent-${name}-${shade}`,
       `dark:hover:text-accent-${name}-${shade}`,
+      `hover:border-accent-${name}-${shade}`,
+      `dark:hover:border-accent-${name}-${shade}`,
     ]),
   ),
   theme: {

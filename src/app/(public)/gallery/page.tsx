@@ -12,7 +12,10 @@ export default async function GalleryPage() {
       <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         {posts.map((post) =>
           post.imageUrl ? (
-            <figure key={post.id} className="group overflow-hidden rounded-lg">
+            <figure
+              key={post.id}
+              className="group overflow-hidden rounded-lg shadow-sm transition-shadow duration-200 ease-out hover:shadow-xl dark:hover:shadow-2xl dark:hover:shadow-black/40"
+            >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={post.imageUrl}

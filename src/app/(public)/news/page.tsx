@@ -13,10 +13,19 @@ export default async function NewsPage() {
 
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item) => (
-          <article key={item.id} className="overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700">
+          <article
+            key={item.id}
+            className={`group overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl dark:hover:bg-slate-700 dark:hover:shadow-2xl dark:hover:shadow-black/40 ${accent.hoverBorder300}`}
+          >
             {item.imageUrl && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={item.imageUrl} alt={item.imageAlt ?? ''} className="aspect-video w-full object-cover" />
+              <div className="overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={item.imageUrl}
+                  alt={item.imageAlt ?? ''}
+                  className="aspect-video w-full object-cover transition-transform duration-200 ease-out group-hover:scale-105"
+                />
+              </div>
             )}
             <div className="p-5">
               <p className="text-xs text-slate-500 dark:text-slate-400">{new Date(item.publishedDate).toLocaleDateString()}</p>

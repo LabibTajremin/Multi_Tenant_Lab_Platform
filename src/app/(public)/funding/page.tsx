@@ -1,8 +1,10 @@
 import { getCurrentTenant } from '@/lib/tenantContext';
 import { PostgresPostRepository } from '@/infrastructure/repositories/PostgresPostRepository';
+import { resolveAccent, accentClasses } from '@/lib/accent';
 
 export default async function FundingPage() {
   const tenant = await getCurrentTenant();
+  const accent = accentClasses(resolveAccent(tenant.primaryColor));
   const posts = await new PostgresPostRepository().listPublished(tenant.id, 'funding');
 
   return (
@@ -12,7 +14,10 @@ export default async function FundingPage() {
 
       <ul className="mt-8 grid gap-6 sm:grid-cols-2">
         {posts.map((post) => (
-          <li key={post.id} className="rounded-lg border border-slate-200 dark:border-slate-700 p-5">
+          <li
+            key={post.id}
+            className={`rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl dark:hover:bg-slate-700 dark:hover:shadow-2xl dark:hover:shadow-black/40 ${accent.hoverBorder300}`}
+          >
             {post.imageUrl && (
               // eslint-disable-next-line @next/next/no-img-element
               <img src={post.imageUrl} alt={post.imageAlt ?? ''} className="mb-4 h-16 object-contain" />
