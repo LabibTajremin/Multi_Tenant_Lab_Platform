@@ -16,7 +16,7 @@ export default async function FundingPage() {
         {posts.map((post) => (
           <li
             key={post.id}
-            className={`rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl dark:hover:bg-slate-700 dark:hover:shadow-2xl dark:hover:shadow-black/40 ${accent.hoverBorder300}`}
+            className={`rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-md transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl dark:hover:bg-slate-700 dark:hover:shadow-2xl dark:hover:shadow-black/40 ${accent.hoverBorder300}`}
           >
             {post.imageUrl && (
               // eslint-disable-next-line @next/next/no-img-element

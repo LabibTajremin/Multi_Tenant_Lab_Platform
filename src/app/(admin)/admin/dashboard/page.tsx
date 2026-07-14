@@ -46,7 +46,7 @@ export default async function DashboardPage() {
           <Link
             key={stat.href}
             href={stat.href}
-            className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 transition hover:border-slate-300 dark:hover:border-slate-500 hover:shadow-sm"
+            className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 shadow-md transition hover:-translate-y-0.5 hover:border-slate-300 dark:hover:border-slate-500 hover:shadow-lg"
           >
             <p className="text-3xl font-semibold text-slate-900 dark:text-slate-100">{stat.count}</p>
             <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">{stat.label}</p>

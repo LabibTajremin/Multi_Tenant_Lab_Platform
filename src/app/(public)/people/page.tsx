@@ -17,7 +17,7 @@ const SECTION_LABELS: Record<MemberPosition, string> = {
 function MemberCard({ member, accent }: { member: Member; accent: ReturnType<typeof accentClasses> }) {
   return (
     <div
-      className={`group rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-sm transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl dark:hover:bg-slate-700 dark:hover:shadow-2xl dark:hover:shadow-black/40 ${accent.hoverBorder300}`}
+      className={`group rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5 shadow-md transition-all duration-200 ease-out hover:-translate-y-1 hover:shadow-xl dark:hover:bg-slate-700 dark:hover:shadow-2xl dark:hover:shadow-black/40 ${accent.hoverBorder300}`}
     >
       <div className={`h-36 w-36 overflow-hidden rounded-full ${accent.bg100}`}>
         {member.photoUrl && (

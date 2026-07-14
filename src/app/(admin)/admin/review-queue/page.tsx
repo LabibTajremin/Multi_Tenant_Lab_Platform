@@ -55,7 +55,7 @@ export default async function ReviewQueuePage() {
 
       <div className="mt-6 space-y-4">
         {rows.map((row) => (
-          <div key={`${row.kind}-${row.id}`} className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4">
+          <div key={`${row.kind}-${row.id}`} className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-4 shadow-md">
             <div className="flex items-center justify-between">
               <div>
                 <span className="inline-block rounded-full bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-xs font-medium text-slate-600 dark:text-slate-400">

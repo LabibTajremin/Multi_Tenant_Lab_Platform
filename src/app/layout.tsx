@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
-      <body className="font-body">
+      <body className="bg-pattern font-body">
         <SessionProviderWrapper>{children}</SessionProviderWrapper>
       </body>
     </html>

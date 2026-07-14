@@ -12,7 +12,7 @@
 
 @layer base {
   body {
-    @apply bg-ivory text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100;
+    @apply text-slate-900 antialiased dark:text-slate-100;
   }
 }
 
@@ -26,5 +26,23 @@
   }
   .no-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Shared background for every large open canvas — the public site body and
+     the admin content area — so both read as one consistent theme instead of
+     two slightly different grays. A near-invisible dot grid (not a bg-image
+     asset — inlined as SVG so there's no extra request) gives the page a
+     touch of texture without reading as "decoration"; it should disappear
+     unless you're looking for it. Cards/tables/chrome (header, footer,
+     sidebar) stay flat, solid surfaces on top — the pattern is only ever on
+     the canvas behind them, never on content itself. */
+  .bg-pattern {
+    background-color: theme('colors.ivory.DEFAULT');
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='2' cy='2' r='1' fill='%230f172a' fill-opacity='0.035'/%3E%3C/svg%3E");
+    background-size: 28px 28px;
+  }
+  :root.dark .bg-pattern {
+    background-color: theme('colors.slate.950');
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Ccircle cx='2' cy='2' r='1' fill='%23e2e8f0' fill-opacity='0.045'/%3E%3C/svg%3E");
   }
 }
