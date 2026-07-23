@@ -1,5 +1,7 @@
 # Multi-Tenant Academic Lab Website Platform
 
+**Live demo:** [lab-platform-chi.vercel.app](https://lab-platform-chi.vercel.app/)
+
 A single, reusable Next.js codebase that any academic research lab can deploy
 as their own instance to run a professional lab website — Home, Research,
 People, Publications, News, Funding, Gallery, Contact — with a simple admin
@@ -42,6 +44,11 @@ validates all of these at boot with Zod and fails fast if any are missing.
 | `STORAGE_PUBLIC_BASE_URL` | Public base URL uploaded files are served from |
 
 ## Local development
+
+Want to poke around without setting anything up first? The
+[live demo](https://lab-platform-chi.vercel.app/) is a deployment of this
+same codebase, seeded the same way `npm run seed-demo-tenant` seeds a local
+instance.
 
 Prerequisites: Node 20+, a Postgres 16 instance, and an S3-compatible storage
 endpoint (MinIO works well locally).
