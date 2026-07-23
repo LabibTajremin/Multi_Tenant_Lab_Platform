@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 /* eslint-disable no-console */
+// CLI for provisioning a new tenant deployment. See the live demo at
+// https://lab-platform-chi.vercel.app/ for what a provisioned tenant looks like.
 import { createInterface } from 'node:readline/promises';
 import { config } from 'dotenv';
 import { provisionTenant } from '../src/application/use-cases/tenants/ProvisionTenant';
@@ -96,6 +98,7 @@ async function main(): Promise<void> {
     console.log('STORAGE_FORCE_PATH_STYLE=true');
     console.log('STORAGE_PUBLIC_BASE_URL=<public-base-url-for-uploaded-files>');
     console.log('----------------------------------------------------------------\n');
+    console.log('Live demo of a provisioned tenant: https://lab-platform-chi.vercel.app/\n');
   } finally {
     rl.close();
     await closePool();
