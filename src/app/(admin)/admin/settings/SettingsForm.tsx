@@ -96,6 +96,44 @@ export default function SettingsForm({ tenant, settings }: { tenant: Tenant; set
         hint="Recommended ratio: 1:1 (square) — e.g. 512×512px. PNG with a transparent background works best."
       />
 
+      <fieldset className="space-y-4 rounded-lg border border-slate-200 p-4 dark:border-slate-700">
+        <legend className="px-1 text-sm font-semibold text-slate-700 dark:text-slate-300">Search &amp; social (SEO)</legend>
+
+        <div>
+          <label htmlFor="metaDescription" className="block text-sm font-medium text-slate-700 dark:text-slate-300">
+            Meta description
+          </label>
+          <textarea
+            id="metaDescription"
+            name="metaDescription"
+            rows={2}
+            maxLength={300}
+            defaultValue={settings?.metaDescription ?? ''}
+            placeholder="A short summary shown in Google results and social previews."
+            className="mt-1 block w-full rounded-md border border-slate-300 dark:border-slate-600 px-3 py-2 text-sm shadow-sm focus:border-slate-500 focus:outline-none focus:ring-1 focus:ring-slate-500 dark:bg-slate-800 dark:text-slate-100"
+          />
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+            Up to 300 characters. Falls back to your tagline if left empty.
+          </p>
+        </div>
+
+        <label htmlFor="footerNavEnabled" className="flex items-start gap-3">
+          <input
+            id="footerNavEnabled"
+            name="footerNavEnabled"
+            type="checkbox"
+            defaultChecked={settings?.footerNavEnabled ?? true}
+            className="mt-0.5 h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-500 dark:border-slate-600 dark:bg-slate-800"
+          />
+          <span className="text-sm">
+            <span className="font-medium text-slate-700 dark:text-slate-300">Show navigation menu in the footer</span>
+            <span className="mt-0.5 block text-xs text-slate-500 dark:text-slate-400">
+              Adds an “Explore” column linking every section. Improves crawlability and SEO; turn off for a minimal footer.
+            </span>
+          </span>
+        </label>
+      </fieldset>
+
       <FileUploadField
         name="bannerUrl"
         category="banner"

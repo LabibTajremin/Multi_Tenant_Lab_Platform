@@ -4,6 +4,8 @@ export interface SiteSettingsPatch {
   bannerUrl?: string | null;
   tagline?: string | null;
   contactEmail?: string | null;
+  metaDescription?: string | null;
+  footerNavEnabled?: boolean;
 }
 
 export interface ISiteSettingsRepository {

@@ -50,6 +50,8 @@ function MemberCard({ member, accent }: { member: Member; accent: ReturnType<typ
   );
 }
 
+export const metadata = { title: 'People' };
+
 export default async function PeoplePage() {
   const tenant = await getCurrentTenant();
   const accent = accentClasses(resolveAccent(tenant.primaryColor));

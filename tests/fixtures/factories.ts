@@ -141,6 +141,8 @@ export function makeSiteSettings(overrides: Partial<SiteSettings> = {}): SiteSet
     bannerUrl: null,
     tagline: 'Advancing research, together.',
     contactEmail: 'contact@example.edu',
+    metaDescription: null,
+    footerNavEnabled: true,
     socialLinks: [],
     updatedAt: new Date('2025-01-01T00:00:00Z'),
     ...overrides,

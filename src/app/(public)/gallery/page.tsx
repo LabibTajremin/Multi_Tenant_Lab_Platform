@@ -1,6 +1,8 @@
 import { getCurrentTenant } from '@/lib/tenantContext';
 import { PostgresPostRepository } from '@/infrastructure/repositories/PostgresPostRepository';
 
+export const metadata = { title: 'Gallery' };
+
 export default async function GalleryPage() {
   const tenant = await getCurrentTenant();
   const posts = await new PostgresPostRepository().listPublished(tenant.id, 'gallery');

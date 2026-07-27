@@ -5,6 +5,8 @@ export const updateSiteSettingsSchema = z.object({
   bannerUrl: z.string().trim().url('Banner URL must be valid').optional(),
   tagline: z.string().trim().max(300).optional(),
   contactEmail: z.string().trim().email('Contact email must be valid').optional(),
+  metaDescription: z.string().trim().max(300, 'Meta description must be 300 characters or fewer').optional(),
+  footerNavEnabled: z.boolean().optional(),
   socialLinks: z
     .array(
       z.object({

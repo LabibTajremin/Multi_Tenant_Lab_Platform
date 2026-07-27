@@ -29,6 +29,8 @@ export async function updateSiteSettings(
     bannerUrl: parsed.data.bannerUrl,
     tagline: parsed.data.tagline,
     contactEmail: parsed.data.contactEmail,
+    metaDescription: parsed.data.metaDescription,
+    footerNavEnabled: parsed.data.footerNavEnabled,
   });
 
   if (parsed.data.socialLinks) {

@@ -1,8 +1,10 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Fraunces, Inter } from 'next/font/google';
 import SessionProviderWrapper from '@/components/SessionProviderWrapper';
 import { getCurrentTenant } from '@/lib/tenantContext';
 import { backgroundPatternClass } from '@/lib/backgroundPattern';
+import { buildSiteMetadata } from '@/lib/seo';
+import { PostgresSiteSettingsRepository } from '@/infrastructure/repositories/PostgresSiteSettingsRepository';
 import './globals.css';
 
 const display = Fraunces({
@@ -16,10 +18,25 @@ const body = Inter({
   variable: '--font-body',
 });
 
-export const metadata: Metadata = {
-  title: 'Lab Platform',
-  description: 'Academic research lab website platform',
+// Per-tenant SEO metadata (title template, description, Open Graph, Twitter
+// card, favicon) resolved live from the tenant row and site settings — see
+// buildSiteMetadata. Falls back to safe defaults before an Admin fills them in.
+// Tints the mobile browser chrome to match the page surface in each theme, and
+// pins sensible zoom defaults so the layout reads as a native-feeling app.
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#f8f7f5' },
+    { media: '(prefers-color-scheme: dark)', color: '#020617' },
+  ],
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const tenant = await getCurrentTenant();
+  const settings = await new PostgresSiteSettingsRepository().getByTenant(tenant.id);
+  return buildSiteMetadata(tenant, settings);
+}
 
 // Reads live, per-deployment DB state (the tenant's background-pattern
 // choice) on every request — see the (public) layout for the full

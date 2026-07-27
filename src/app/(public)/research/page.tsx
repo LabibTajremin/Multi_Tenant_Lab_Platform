@@ -1,6 +1,8 @@
 import { getCurrentTenant } from '@/lib/tenantContext';
 import { PostgresPostRepository } from '@/infrastructure/repositories/PostgresPostRepository';
 
+export const metadata = { title: 'Research' };
+
 export default async function ResearchPage() {
   const tenant = await getCurrentTenant();
   const posts = await new PostgresPostRepository().listPublished(tenant.id, 'research');

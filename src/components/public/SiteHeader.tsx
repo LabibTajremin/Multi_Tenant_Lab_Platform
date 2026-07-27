@@ -1,18 +1,9 @@
 import Link from 'next/link';
 import type { Tenant } from '@/domain/entities/Tenant';
 import { resolveAccent, accentClasses } from '@/lib/accent';
+import { SITE_NAV_LINKS as NAV_LINKS } from '@/lib/siteNav';
 import ThemeToggle from '@/components/ThemeToggle';
 import MobileNav from './MobileNav';
-
-const NAV_LINKS = [
-  { href: '/research', label: 'Research' },
-  { href: '/people', label: 'People' },
-  { href: '/publications', label: 'Publications' },
-  { href: '/news', label: 'News' },
-  { href: '/funding', label: 'Funding' },
-  { href: '/gallery', label: 'Gallery' },
-  { href: '/contact', label: 'Contact' },
-];
 
 export default function SiteHeader({ tenant, isLoggedIn = false }: { tenant: Tenant; isLoggedIn?: boolean }) {
   const accent = accentClasses(resolveAccent(tenant.primaryColor));
@@ -23,17 +14,17 @@ export default function SiteHeader({ tenant, isLoggedIn = false }: { tenant: Ten
     // inside header, and a sibling section below (e.g. the home page hero,
     // itself position:relative) can still paint on top of it.
     <header className="relative z-30 border-b border-slate-200 bg-ivory/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
-      <div className="mx-auto flex max-w-content items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-3">
+      <div className="mx-auto flex max-w-content items-center justify-between gap-2 px-4 py-3 sm:px-6 sm:py-4">
+        <Link href="/" className="flex min-w-0 items-center gap-2.5 sm:gap-3">
           {tenant.logoUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={tenant.logoUrl} alt={`${tenant.labName} logo`} className="h-9 w-9 rounded object-cover" />
+            <img src={tenant.logoUrl} alt={`${tenant.labName} logo`} className="h-9 w-9 shrink-0 rounded object-cover" />
           ) : (
-            <span className={`flex h-9 w-9 items-center justify-center rounded ${accent.bg500} font-display text-sm font-semibold text-white`}>
+            <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded ${accent.bg500} font-display text-sm font-semibold text-white transition-transform duration-200 group-hover:scale-105`}>
               {tenant.labName.charAt(0)}
             </span>
           )}
-          <span className="font-display text-lg font-semibold text-slate-900 dark:text-slate-100">{tenant.labName}</span>
+          <span className="truncate font-display text-base font-semibold text-slate-900 sm:text-lg dark:text-slate-100">{tenant.labName}</span>
         </Link>
         <div className="flex items-center gap-2">
           <nav className="hidden gap-6 md:flex">

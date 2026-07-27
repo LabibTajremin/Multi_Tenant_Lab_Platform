@@ -3,6 +3,7 @@ import { isTenantProvisioned } from '@/lib/setupStatus';
 import { getCurrentTenant } from '@/lib/tenantContext';
 import { getSessionUser } from '@/lib/session';
 import { PostgresSiteSettingsRepository } from '@/infrastructure/repositories/PostgresSiteSettingsRepository';
+import { buildOrganizationJsonLd } from '@/lib/seo';
 import SiteHeader from '@/components/public/SiteHeader';
 import SiteFooter from '@/components/public/SiteFooter';
 
@@ -24,8 +25,15 @@ export default async function PublicLayout({ children }: { children: React.React
     getSessionUser(),
   ]);
 
+  const organizationJsonLd = buildOrganizationJsonLd(tenant, settings);
+
   return (
     <div className="flex min-h-screen flex-col">
+      {/* Structured data helps search engines model the lab as an entity. */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: organizationJsonLd }}
+      />
       <SiteHeader tenant={tenant} isLoggedIn={Boolean(sessionUser)} />
       <div className="flex-1">{children}</div>
       <SiteFooter tenant={tenant} settings={settings} />
