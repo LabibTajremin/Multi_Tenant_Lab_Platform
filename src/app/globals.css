@@ -11,8 +11,32 @@
 }
 
 @layer base {
+  html {
+    /* Anchor jumps (e.g. footer nav to sections) glide instead of snapping —
+       disabled below for users who prefer reduced motion. */
+    scroll-behavior: smooth;
+    /* Keeps sticky/anchored content clear of the header when jumped to. */
+    scroll-padding-top: 5rem;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+  }
   body {
     @apply text-slate-900 antialiased dark:text-slate-100;
+    text-rendering: optimizeLegibility;
+  }
+  /* Respect the OS "reduce motion" setting everywhere — accessibility and a
+     calmer experience on low-power mobile devices. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
   }
 }
 
@@ -26,6 +50,38 @@
   }
   .no-scrollbar::-webkit-scrollbar {
     display: none;
+  }
+
+  /* Premium entrance: content lifts and fades into place on first paint. GPU
+     properties (transform/opacity) only, so it stays smooth on mobile. Pair
+     with a `--enter-delay` inline style for staggered reveals. */
+  .animate-enter {
+    animation: enter-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--enter-delay, 0ms);
+  }
+
+  /* A soft depth gradient for hero/banner canvases — richer than a flat fill
+     without pulling attention from the content on top. */
+  .hero-sheen {
+    background-image:
+      radial-gradient(120% 120% at 50% 0%, rgba(255, 255, 255, 0.5) 0%, transparent 55%),
+      radial-gradient(100% 100% at 100% 100%, rgba(15, 23, 42, 0.06) 0%, transparent 60%);
+  }
+  :root.dark .hero-sheen {
+    background-image:
+      radial-gradient(120% 120% at 50% 0%, rgba(148, 163, 184, 0.14) 0%, transparent 55%),
+      radial-gradient(100% 100% at 100% 100%, rgba(0, 0, 0, 0.35) 0%, transparent 60%);
+  }
+}
+
+@keyframes enter-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
 

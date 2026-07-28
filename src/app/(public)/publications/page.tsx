@@ -2,6 +2,8 @@ import { getCurrentTenant } from '@/lib/tenantContext';
 import { PostgresPublicationRepository } from '@/infrastructure/repositories/PostgresPublicationRepository';
 import { resolveAccent, accentClasses } from '@/lib/accent';
 
+export const metadata = { title: 'Publications' };
+
 export default async function PublicationsPage({
   searchParams,
 }: {

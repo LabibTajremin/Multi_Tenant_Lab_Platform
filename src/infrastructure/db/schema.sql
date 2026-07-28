@@ -153,11 +153,13 @@ CREATE TABLE posts (
 );
 
 CREATE TABLE site_settings (
-  tenant_id       UUID PRIMARY KEY REFERENCES tenants(id) ON DELETE CASCADE,
-  banner_url      TEXT,
-  tagline         TEXT,
-  contact_email   TEXT,
-  updated_at      TIMESTAMPTZ NOT NULL DEFAULT now()
+  tenant_id          UUID PRIMARY KEY REFERENCES tenants(id) ON DELETE CASCADE,
+  banner_url         TEXT,
+  tagline            TEXT,
+  contact_email      TEXT,
+  meta_description   TEXT,
+  footer_nav_enabled BOOLEAN NOT NULL DEFAULT true,
+  updated_at         TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
 CREATE TABLE site_social_links (

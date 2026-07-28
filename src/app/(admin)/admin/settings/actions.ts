@@ -48,6 +48,9 @@ export async function updateSettingsAction(_prevState: FormState, formData: Form
         bannerUrl: String(formData.get('bannerUrl') ?? '') || undefined,
         tagline: String(formData.get('tagline') ?? '') || undefined,
         contactEmail: String(formData.get('contactEmail') ?? '') || undefined,
+        metaDescription: String(formData.get('metaDescription') ?? '') || undefined,
+        // Unchecked checkboxes submit nothing — an absent value means "off".
+        footerNavEnabled: formData.get('footerNavEnabled') === 'on',
         socialLinks,
       },
       ctx,

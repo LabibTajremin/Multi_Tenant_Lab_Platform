@@ -42,18 +42,30 @@ export default async function HomePage() {
         className={`${settings?.bannerUrl ? '' : `${accent.bg50} dark:bg-slate-900`} relative overflow-hidden`}
         style={settings?.bannerUrl ? { backgroundImage: `url(${settings.bannerUrl})`, backgroundSize: 'cover', backgroundPosition: 'center' } : undefined}
       >
-        {settings?.bannerUrl && <div className="absolute inset-0 bg-slate-900/50" />}
-        <div className="relative mx-auto max-w-content px-6 py-28 text-center">
+        {settings?.bannerUrl ? (
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/45 to-slate-900/30" />
+        ) : (
+          <div className="hero-sheen absolute inset-0" aria-hidden />
+        )}
+        <div className="relative mx-auto max-w-content px-6 py-20 text-center sm:py-28">
           <h1
-            className={`font-display text-4xl font-semibold sm:text-5xl ${settings?.bannerUrl ? 'text-white' : 'text-slate-900 dark:text-slate-100'}`}
+            className={`animate-enter font-display text-3xl font-semibold tracking-tight sm:text-5xl ${settings?.bannerUrl ? 'text-white drop-shadow-sm' : 'text-slate-900 dark:text-slate-100'}`}
           >
             {tenant.labName}
           </h1>
           {tenant.university && (
-            <p className={`mt-2 text-lg ${settings?.bannerUrl ? 'text-slate-100' : 'text-slate-600 dark:text-slate-400'}`}>{tenant.university}</p>
+            <p
+              className={`animate-enter mt-2 text-base sm:text-lg ${settings?.bannerUrl ? 'text-slate-100' : 'text-slate-600 dark:text-slate-400'}`}
+              style={{ ['--enter-delay' as string]: '80ms' }}
+            >
+              {tenant.university}
+            </p>
           )}
           {settings?.tagline && (
-            <p className={`mx-auto mt-4 max-w-2xl text-lg ${settings?.bannerUrl ? 'text-slate-100' : 'text-slate-700 dark:text-slate-300'}`}>
+            <p
+              className={`animate-enter mx-auto mt-4 max-w-2xl text-base sm:text-lg ${settings?.bannerUrl ? 'text-slate-100' : 'text-slate-700 dark:text-slate-300'}`}
+              style={{ ['--enter-delay' as string]: '160ms' }}
+            >
               {settings.tagline}
             </p>
           )}

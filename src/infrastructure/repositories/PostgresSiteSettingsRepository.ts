@@ -9,6 +9,8 @@ interface SiteSettingsRow {
   banner_url: string | null;
   tagline: string | null;
   contact_email: string | null;
+  meta_description: string | null;
+  footer_nav_enabled: boolean;
   updated_at: Date;
 }
 
@@ -31,6 +33,8 @@ function toEntity(row: SiteSettingsRow, socialLinks: SiteSocialLink[]): SiteSett
     bannerUrl: row.banner_url,
     tagline: row.tagline,
     contactEmail: row.contact_email,
+    metaDescription: row.meta_description,
+    footerNavEnabled: row.footer_nav_enabled,
     socialLinks,
     updatedAt: row.updated_at,
   };
@@ -54,15 +58,24 @@ export class PostgresSiteSettingsRepository implements ISiteSettingsRepository {
   async upsert(tenantId: string, patch: SiteSettingsPatch): Promise<SiteSettings> {
     return withTenantScope(tenantId, async (client) => {
       const result = await client.query<SiteSettingsRow>(
-        `INSERT INTO site_settings (tenant_id, banner_url, tagline, contact_email)
-         VALUES ($1, $2, $3, $4)
+        `INSERT INTO site_settings (tenant_id, banner_url, tagline, contact_email, meta_description, footer_nav_enabled)
+         VALUES ($1, $2, $3, $4, $5, COALESCE($6, true))
          ON CONFLICT (tenant_id) DO UPDATE SET
            banner_url = COALESCE($2, site_settings.banner_url),
            tagline = COALESCE($3, site_settings.tagline),
            contact_email = COALESCE($4, site_settings.contact_email),
+           meta_description = COALESCE($5, site_settings.meta_description),
+           footer_nav_enabled = COALESCE($6, site_settings.footer_nav_enabled),
            updated_at = now()
          RETURNING *`,
-        [tenantId, patch.bannerUrl ?? null, patch.tagline ?? null, patch.contactEmail ?? null],
+        [
+          tenantId,
+          patch.bannerUrl ?? null,
+          patch.tagline ?? null,
+          patch.contactEmail ?? null,
+          patch.metaDescription ?? null,
+          patch.footerNavEnabled ?? null,
+        ],
       );
       const row = result.rows[0];
       if (!row) {

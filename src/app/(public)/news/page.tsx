@@ -2,6 +2,8 @@ import { getCurrentTenant } from '@/lib/tenantContext';
 import { PostgresNewsRepository } from '@/infrastructure/repositories/PostgresNewsRepository';
 import { resolveAccent, accentClasses } from '@/lib/accent';
 
+export const metadata = { title: 'News' };
+
 export default async function NewsPage() {
   const tenant = await getCurrentTenant();
   const accent = accentClasses(resolveAccent(tenant.primaryColor));

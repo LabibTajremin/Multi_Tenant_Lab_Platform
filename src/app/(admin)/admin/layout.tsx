@@ -19,11 +19,13 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   const tenant = await getCurrentTenant();
 
   return (
-    <div className="flex min-h-screen">
-      <div className="w-64 shrink-0">
-        <AdminNav actor={user} reviewEnabled={tenant.reviewEnabled} />
+    <div className="flex min-h-screen flex-col md:flex-row">
+      <AdminNav actor={user} reviewEnabled={tenant.reviewEnabled} />
+      <div
+        className={`bg-surface ${backgroundPatternClass(tenant.backgroundPattern)} min-w-0 flex-1 px-4 py-6 sm:px-6 md:px-8 md:py-8`}
+      >
+        {children}
       </div>
-      <div className={`bg-surface ${backgroundPatternClass(tenant.backgroundPattern)} flex-1 px-8 py-8`}>{children}</div>
     </div>
   );
 }

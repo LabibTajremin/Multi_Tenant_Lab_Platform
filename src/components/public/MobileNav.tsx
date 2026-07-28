@@ -30,7 +30,7 @@ export default function MobileNav({ links }: { links: { href: string; label: str
       {open && (
         <nav
           id="mobile-nav-menu"
-          className="absolute inset-x-0 top-full z-20 border-t border-slate-200 bg-ivory px-6 py-4 shadow-sm dark:border-slate-800 dark:bg-slate-950"
+          className="animate-enter absolute inset-x-0 top-full z-20 border-t border-slate-200 bg-ivory px-4 py-3 shadow-lg dark:border-slate-800 dark:bg-slate-950"
         >
           <ul className="space-y-1">
             {links.map((link) => (

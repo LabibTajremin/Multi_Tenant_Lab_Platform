@@ -2,6 +2,8 @@ import { getCurrentTenant } from '@/lib/tenantContext';
 import { PostgresPostRepository } from '@/infrastructure/repositories/PostgresPostRepository';
 import { resolveAccent, accentClasses } from '@/lib/accent';
 
+export const metadata = { title: 'Funding' };
+
 export default async function FundingPage() {
   const tenant = await getCurrentTenant();
   const accent = accentClasses(resolveAccent(tenant.primaryColor));

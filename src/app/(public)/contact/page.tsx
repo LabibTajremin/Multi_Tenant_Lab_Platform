@@ -10,6 +10,8 @@ const PLATFORM_LABELS: Record<string, string> = {
   github: 'GitHub',
 };
 
+export const metadata = { title: 'Contact' };
+
 export default async function ContactPage() {
   const tenant = await getCurrentTenant();
   const accent = accentClasses(resolveAccent(tenant.primaryColor));
