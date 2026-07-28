@@ -8,10 +8,14 @@ test('Editor submission under review mode is hidden until Admin approves it', as
   // Admin: ensure review mode is on, then create a fresh Editor account.
   await loginAs(page, seed.adminEmail, seed.adminPassword);
   await page.goto('/admin/settings');
-  const toggle = page.locator('input[type=checkbox]');
+  // Scope to the review-mode checkbox by its accessible label — the settings
+  // page also has a footer-navigation checkbox, so a bare input[type=checkbox]
+  // locator is ambiguous under Playwright strict mode.
+  const toggle = page.getByRole('checkbox', { name: /Require Admin approval/i });
+  await expect(toggle).toBeVisible();
   if (!(await toggle.isChecked())) {
     await toggle.click();
-    await page.waitForTimeout(500);
+    await expect(toggle).toBeChecked();
   }
 
   const editorEmail = `e2e-editor-${Date.now()}@example.edu`;
